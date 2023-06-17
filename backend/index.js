@@ -51,8 +51,6 @@ const orderSchema = mongoose.Schema({
     _id:String,
     productId:String,
     userId:String,
-    count:Number,
-    price:Number
 })
 const Order = mongoose.model("Order",orderSchema)
 
@@ -156,7 +154,7 @@ app.post("/products/add",upload.single("image"),async(req,res)=>{
         res.status(500).json({message:error.message});
     }
 });
-//Add Product İşlemi
+///////////
 
 //Product Sİlme İşlemi 
 app.post("/products/remove",async(req,res)=>{
@@ -168,7 +166,7 @@ app.post("/products/remove",async(req,res)=>{
         res.status(500).json({message:error.message});
     }
 });
-//Product Sİlme İşlemi 
+////////// 
 
 
 // BASKET İŞLEMLERİ
@@ -218,3 +216,62 @@ app.post("/baskets/getAll",async(req,res)=>{
         res.status(500).json({message:error.message});
     }
 })
+//////////////
+
+//RemoveBasket İşlemi///
+app.post("/baskets/remove",async(req,res)=>{
+    try{
+        const {_id} = req.body;
+        await Basket.findByIdAndRemove(_id);
+        res.json({message:"Ürün Silme İşlemi Başarıyla Tamamlandı"});
+    } catch (error){
+        res.status(500).json({message:error.message});
+    }
+});
+
+
+//SİPARİŞ İŞLEMLERİ
+
+//Sipariş Ürün Ekleme
+
+app.post("/orders/add",async(req,res)=>{
+    try {
+        const {userId}=req.body;  //UserID aldık
+        const baskets =await Basket.find({userId:userId}); //Sepet tablosunda eşleşen verileri aldık
+        for(const basket of baskets){ //for ile basket diye const oluşturduk
+            let order = new Order({ //Yeni sipariş verisi oluşturduk
+                _id:uuidv4(), //Eşsiz bir ID
+                productId:basket.productId, //Sepetteki ürünün ID'sini aldık
+                userId:userId, //Kullanıcı ID'sini aldık ve kayıt ettik
+            });
+            order.save(); //Order tablosuna kayıt ettik verileri
+            await Basket.findByIdAndDelete(basket._id)//Sepetten kayıt edilen ürünü sildik 
+        }//Yukarıda ürün sayısı kadar döngü dönüyor sonrasında bitiyor
+        
+    } catch (error) {
+        res.status(500).json({message:error.message})
+        
+    }
+})
+app.post("/orders/getAll",async(req,res)=>{
+    try {
+        const{userId}=req.body //UserID'yi Order.jsx içinden alıyoruz method'dan
+        const baskets= await Order.aggregate([
+            {
+                $match:{userId: userId} //Burada değerleri eşledik
+            },
+            {
+                $lookup:{  //MongoDB özelliği
+                    from:"products",  //İlişkili tablo adı
+                    localField:"productId",//Basket'de kullanılan alanın ismi
+                    foreignField:"_id", //İlişkisel olarak product tablosunda localfield'in eşiti (primary/foreign key gibi)
+                    as:"products" //Yeni alan
+                }
+            }
+        ]);
+        res.json(baskets);
+    } catch (error) {
+        res.status(500).json({message:error.message});
+    }
+})
+//Siparişleri Getirme

@@ -18,13 +18,29 @@ function BasketComponent() {
         
     }
     
+    //Remove işlemi
+    const remove = async (_id)=>{
+        let confirm = window.confirm("Ürünü Silmek İstediğinize Emin misiniz?");
+        if (confirm){
+            let model={_id:_id};
+            await axios.post("http://localhost:5000/baskets/remove",model);
+            getAll();
+        }
+    }
 
-
+    //Sipariş Oluşturma
+    const addOrder = async () => {
+        let user = JSON.parse(localStorage.getItem("user"));
+        let model = { userId: user._id };
+        await axios.post("http://localhost:5000/orders/add", model);
+        window.location.reload();
+      }
+    
+    
+        
     useEffect(() => {
         getAll();
     }, [])
-
-
 
     return (
         <>
@@ -57,7 +73,7 @@ function BasketComponent() {
                                                 <td>{basket.products[0].stock}</td>
                                                 <td>{basket.products[0].price}</td>
                                                 <td>
-                                                <button  className='btn btn-outline-danger btn-sm'>
+                                                <button onClick={() => remove(basket._id)} className='btn btn-outline-danger btn-sm'>
                                                     Sil
                                                 </button>
                                             </td>
@@ -74,7 +90,7 @@ function BasketComponent() {
                                     <hr/>
                                         <p className="text-center">Toplam Ürün Sayısı:{baskets.length}</p>
                                         <h4 className="text-center alert alert-danger">Toplam Tutar:{total}</h4>
-                                        <button className="btn btn-outline-danger w-100"> Ödeme Yap</button>
+                                        <button onClick={addOrder} className="btn btn-outline-danger w-100"> Ödeme Yap</button>
                                 </div>
                                </div>
                             </div>
