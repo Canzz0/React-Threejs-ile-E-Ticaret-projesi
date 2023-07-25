@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {useNavigate} from 'react-router-dom';
-import { Navigate } from "react-router-dom";
+import {Navigate,Link,useNavigate} from 'react-router-dom';
 function ProductComponent() {
     const navigate = useNavigate();  //Navigate hooks kullanmak için
     const [products, setProducts] = useState([]);
     const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
     const [categoryName, setcategoryName] = useState("");
     const [price, setPrice] = useState(0);
     const [stock, setStock] = useState(0);
     const [image, setImage] = useState("");
-
+    const [figur, setFigur] = useState("");
     //GETİRME
     const getAll = async () => {
         const response = await axios.get("http://localhost:5000/products");
+        
         setProducts(response.data);
     }
     ///Ürünlerimizi apı den Çekme işlemini yaptık 
@@ -41,13 +42,18 @@ function ProductComponent() {
     ///EKLEME
     const add = async (e) => {
         e.preventDefault();
-        var Imginput = document.querySelector("input[type='file']");  //Resim seçmek için bu yolu kullandık
-        const formData = new FormData();  //Burada da post işlemi için verileri forma yazdırıcız burda form oluşturuyoruz.
-        formData.append("name", name); //Forma ekleme
-        formData.append("categoryName", categoryName); //Forma ekleme
-        formData.append("stock", stock); //Forma ekleme
-        formData.append("price", price); //Forma ekleme
-        formData.append("image", Imginput.files[0], Imginput.files[0].name); //Forma ekleme
+        const imageInput = document.querySelector("input[name='image']");
+        const figurInput = document.querySelector("input[name='figur']");
+        
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("description", description);
+        formData.append("categoryName", categoryName);
+        formData.append("stock", stock);
+        formData.append("price", price);
+        formData.append("image", imageInput.files[0], imageInput.files[0].name);
+        formData.append("figur", figurInput.files[0], figurInput.files[0].name);
+      
 
         var response = await axios.post("http://localhost:5000/products/add", formData);
         alert(response.data.message);
@@ -87,6 +93,7 @@ function ProductComponent() {
                                         <th>Kategori Adı</th>
                                         <th>Adet</th>
                                         <th>Fiyatı</th>
+                                        <th>Detay Sayfası</th>
                                         <th>İşlemler</th>
                                     </tr>
                                 </thead>
@@ -101,6 +108,10 @@ function ProductComponent() {
                                             <td>{product.categoryName}</td>
                                             <td>{product.stock}</td>
                                             <td>{product.price}</td>
+                                            <td>
+                                            {/* Ürün detay sayfası linki */}
+                                            <Link to={`/products/${product._id}`}>Detay</Link>
+                                            </td>
                                             <td>
                                                 <button onClick={() => remove(product._id)} className='btn btn-outline-danger btn-sm'>
                                                     Sil
@@ -135,6 +146,10 @@ function ProductComponent() {
                                     <input className="form-control" value={name} onChange={(e) => setName(e.target.value)} id="name" name="name" />
                                 </div>
                                 <div className="form-group">
+                                    <label htmlFor="description">Ürün Açıklaması</label>
+                                    <input className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} id="description" name="description" />
+                                </div>
+                                <div className="form-group">
                                     <label htmlFor="CategoryName">Kategori Adı</label>
                                     <select className='form-control'
                                         value={categoryName} onChange={(e) => setcategoryName(e.target.value)}>
@@ -157,6 +172,11 @@ function ProductComponent() {
                                     <label htmlFor='image'>Resmi</label>
                                     <input type="file" className='form-control' value={image} onChange={(e) => setImage(e.target.value)} id="image" name="image" />
                                 </div>
+                                <div className='form-group'>
+                                    <label htmlFor='figur'>3B Figur</label>
+                                    <input type="file" className='form-control' value={figur} onChange={(e) => setFigur(e.target.value)} id="figur" name="figur" />
+                                </div>
+                               
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Kapat</button>

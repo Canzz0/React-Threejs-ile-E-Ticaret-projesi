@@ -10,7 +10,7 @@ const path =require("path");
 //Fonksiyonları kullanmaya başladık
 app.use(cors());   //Güvenlik protokolü
 app.use(express.json());   //Verileri jsona dönüştür
-app.use("/uploads",express.static(path.join(__dirname,"upload"))) //Resim dosyalarını göstermek için kullanılır.
+app.use("/uploads",express.static(path.join(__dirname,"uploads"))) //Resim dosyalarını göstermek için kullanılır.
 const url = "mongodb+srv://MongoDB:1@reacteticaret.ufz2qsp.mongodb.net/?retryWrites=true&w=majority" //MONGODAN ALDIĞIMIZ URL
 mongoose.connect(url).then(res =>{
     console.log("database başarılı"); //Bağlantı başarılı ise gösterilecek mesaj
@@ -32,9 +32,11 @@ const User = mongoose.model("User",userSchema) //Bilgileri mongoose model yardı
 const productSchema = new mongoose.Schema({
     _id:String,
     name:String,
+    description:String,
     stock:Number,
     price:Number,
     imageUrl:String,
+    figurUrl:String,
     categoryName:String,
 })
 const Product = mongoose.model("Product",productSchema)
@@ -119,42 +121,47 @@ app.listen(5000,()=>{
 //GET  getirme işlemleri
 
 
-//Dosya Kayıt İşlemi
-const storage =multer.diskStorage({
-    destination:function(req,file,cb){
-        cb(null,"uploads/")
+// Dosya Kayıt İşlemi
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads");
     },
-    filename:function(req,file,cb){
-        cb(null,Date.now()+"-"+file.originalename)
-
-    }
-})
-
-const upload = multer({storage:storage})
-////////////////////
-
-
-//Add Product İşlemi
-app.post("/products/add",upload.single("image"),async(req,res)=>{
-    try{
-        const{name,categoryName,stock,price}= req.body;
-        const product =new Product({
-            _id:uuidv4(),
-            name:name,
-            stock:stock,
-            price:price,
-            categoryName:categoryName,
-            imageUrl:req.file.path
-
-
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + "-" + file.originalname);
+    },
+  });
+  
+  const upload = multer({ storage: storage });
+  ////////////////////
+  
+  // Add Product İşlemi
+  app.post(
+    "/products/add",
+    upload.fields([
+      { name: "image", maxCount: 1 },
+      { name: "figur", maxCount: 1 },
+    ]),
+    async (req, res) => {
+      try {
+        const { name,description, categoryName, stock, price } = req.body;
+        const product = new Product({
+          _id: uuidv4(),
+          name: name,
+          description:description,
+          stock: stock,
+          price: price,
+          categoryName: categoryName,
+          imageUrl: req.files["image"][0].path,
+          figurUrl: req.files["figur"][0].path,
         });
         await product.save();
-        res.json({message:"Ürün Kaydı Başarıyla Tamamlandı"});
-    }catch {
-        res.status(500).json({message:error.message});
+        res.json({ message: "Ürün Kaydı Başarıyla Tamamlandı" });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+      }
     }
-});
-///////////
+  );
 
 //Product Sİlme İşlemi 
 app.post("/products/remove",async(req,res)=>{

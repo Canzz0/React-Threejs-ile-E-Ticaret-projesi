@@ -5,45 +5,22 @@ function LayoutComponent(){
     let isAdmin = false;
     const logout = () =>{
         navigate("/login");
-        localStorage.clear();
-    }
-       //Yetki Kontrolü
-       const checkIsAdmin = () =>{   
-        let user =JSON.parse(localStorage.getItem("user"));
-        isAdmin=user.isAdmin;
-    }
-    checkIsAdmin();
-    
-    useEffect(()=>{
-        if (!localStorage.getItem("token")){
-            navigate("/login");   //gidip localstore'da token kontrolü yapıyor eğer kullanıcı bilgileri yoksa yani giriş yapmadıysa direkt giriş sayfasına yönlendiriyor
-        }
-      
-    })
-
-    
-    
-    
-    
-    
-    
+     
+    }   
     return (
         <>
-          <nav className="navbar navbar-expand-lg bg-dark navbar-dark  p-3">
+          <nav className="navbar navbar-expand-lg mt-2  p-3">
         <div className="container-fluid">
-            <a href="#" className="navbar-brand">Kurs Yönetim Sistemi</a>
+            <a href="#" className="navbar-brand">E-TİCARET</a>
             <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarCollapse">
                 <div className="navbar-nav">
-                    <Link to="/" className="nav-item nav-link navbar-dark">Anasayfa</Link>
-                    {
-                    isAdmin &&
-                    <Link to="/products" className="nav-item nav-link navbar-dark">Ürünler</Link>
-                    }
+                    <Link to="/home" className="nav-item nav-link navbar-dark">Anasayfa</Link>
+                    
                    
-                    <Link to="/orders" className="nav-item nav-link navbar-dark">Siparişlerim</Link>
+                    <Link to="/shop" className="nav-item nav-link navbar-dark">Alışveriş</Link>
                     <Link to="/basket" className="nav-item nav-link navbar-dark">Sepetim</Link>
                 </div>
                 <div className="navbar-nav ms-auto">

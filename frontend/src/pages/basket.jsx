@@ -57,9 +57,9 @@ function BasketComponent() {
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th></th>
                                             <th>Ürün Adı</th>
                                             <th>Kategori Adı</th>
-                                            <th>Adet</th>
                                             <th>Fiyatı</th>
                                             <th>İşlemler</th>
                                         </tr>
@@ -68,12 +68,14 @@ function BasketComponent() {
                                         {baskets.map((basket, index) => (
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
+                                                <td>
+                                                <img style={{ width: "250px" }} src={'http://localhost:5000/' +basket.products[0].imageUrl} />
+                                            </td>
                                                 <td>{basket.products[0].name}</td>
                                                 <td>{basket.products[0].categoryName}</td>
-                                                <td>{basket.products[0].stock}</td>
                                                 <td>{basket.products[0].price}</td>
                                                 <td>
-                                                <button onClick={() => remove(basket._id)} className='btn btn-outline-danger btn-sm'>
+                                                <button onClick={() => remove(basket._id)} className='btn btn-outline-danger w-100'>
                                                     Sil
                                                 </button>
                                             </td>

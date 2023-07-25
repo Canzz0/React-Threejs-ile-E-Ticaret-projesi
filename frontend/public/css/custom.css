@@ -1,0 +1,427 @@
+body {
+  max-width: 100%;
+  background-image: url(./arkaplan.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: all load 1s;
+}
+
+@keyframes load {
+
+  from {
+    opacity: 0;
+    width: 60%;
+  }
+
+  to {
+    opacity: 1;
+    width: 100%;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+  visibility: hidden;
+  opacity: 0
+}
+
+.active {
+
+  animation: load 1s;
+}
+
+.navbar {
+
+  border-bottom: solid rgb(216, 216, 216) 0.01px;
+  font-size: large;
+}
+
+
+
+/* Açılış Sayfası */
+ .welcome-page {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgb(252, 252, 252);
+z-index: 1;
+animation: moveTop 1s 2s forwards;
+}
+
+.content {
+user-select: none;
+color: rgb(8, 8, 8);
+display: flex;
+align-items: center;
+justify-content: center;
+height: 100vh;
+font-size: 5vw;
+font-family: 'verdana';
+font-weight: bold;
+letter-spacing: 20px;
+opacity: 0;
+animation: opacity 1s forwards  ease-in-out;
+position: relative;
+}
+
+
+
+
+
+@keyframes opacity {
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+}
+
+
+
+@keyframes moveTop {
+0% {
+  opacity: 1;
+}
+100% {
+  top: -100%;
+  bottom: 100%;
+  opacity:0;
+}
+}
+/* ////////////////////// */
+
+/* KARTLAR */
+.custom-cards {
+  display: flex;
+  justify-content: center;
+  /* opacity:0;
+  animation:opacity 1s 5s 1 forwards; */
+}
+.custom-card {
+  border: none;
+  padding: 3%;
+  margin: 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  perspective: 1000px;
+  transition: all 0.7s;
+}
+.custom-card a {
+  text-decoration: none;
+  color: black;
+}
+.custom-card:hover {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+  transition: all 0.7s;
+  transition: all 0.7s;
+  transform: rotateX(50deg);
+  overflow: visible;
+  padding-top: 0%;
+  padding-left: 7%;
+}
+.custom-card-content {
+  transform-style: preserve-3d;
+  transition: transform 0.3s;
+}
+.custom-card-price
+{
+  margin-top: 15px;
+  font-size: large;
+  justify-content: center;
+  text-align: center;
+}
+.custom-card-image{
+  justify-content: center;
+  text-align: center;
+}
+.custom-card-button
+{
+  border: none;
+  font-size: larger;
+  justify-content: center;
+  text-align: center;
+  background-color: green;
+  color: white;
+  border-radius: 7px;
+  padding: 7px;
+}
+.custom-card:hover .custom-card-title,
+.custom-card:hover .custom-card-content,
+.custom-card:hover .custom-card-price,
+.custom-card:hover .custom-card-button,
+.custom-card:hover .custom-card-image {
+  opacity: 0;
+  transform: translateZ(20px);
+  transition: all 0.7s;
+}
+.character {
+  top: -20px;
+  width: 70%;
+  opacity: 0;
+  transition: all 0.7s;
+  position: absolute;
+  filter: drop-shadow(4px 40px 12px #777777);
+  animation: moveAnimation 3s linear infinite;
+}
+@keyframes moveAnimation {
+  0% {
+    transform: translateY(-45%);
+  }
+  50% {
+    transform: translateY(-60%);
+  }
+  100% {
+    transform: translateY(-45%);
+  }
+}
+.custom-card:hover .character {
+  opacity: 1;
+  transform: translate3d(0%, -40%, 100px);
+
+}
+/* //////////////// */
+/* Kategori */
+.category {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  float: left;
+  width: 85%;
+  height: 100%;
+  margin:15px ;
+  font-size: large;
+  padding: 25px;
+
+}
+.figur-card {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 10px;
+  /* Diğer stil ayarları */
+}
+.category h1 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  border: solid transparent 1px;
+  border-radius: 7px;
+  background-color: #ececec;
+  padding: 15px;
+}
+
+.category ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.category li {
+  margin-bottom: 5px;
+}
+
+.category a {
+  text-decoration: none;
+  color: #333;
+}
+/* //////////////// */
+/* Ürün Sayfası */
+.product {
+  margin: 25px;
+  justify-content: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+.product-image img {
+  width: 350px;
+  height: auto;
+  object-fit: cover;
+  margin-right: 20px;
+}
+.product-details {
+  flex: 1;
+}
+.product-title {
+  font-size: 24px;
+  margin: 10px 0;
+}
+.product-categoryName {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.product-price {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.product-content{
+
+}
+.product-description{
+  margin-top: 25px;
+  padding: 15px;
+  font-size: larger;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.add-to-cart {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: rgb(174, 5, 5);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.add-to-cart:hover {
+  background-color: rgb(255, 0, 0);
+  transition: all 0.5s;
+}
+/* ///////////////////////// */
+
+/* PARALLAX */
+.parallax {
+  background: rgb(255, 255, 255);
+  height: 25%;
+  width: 75%;
+  overflow: hidden;
+  margin-bottom: 7px;
+  animation: load 1s;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  transition:  all 0.5s;
+}
+
+.parallax-container {
+  padding: 25px;
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  height: max-content;
+}
+.parallax:hover{
+  background-color: rgb(234, 233, 233);
+
+}
+.parallax-image {
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(4px 40px 12px #777777);
+  width: 30%;
+  height: 15%;
+  flex: 0;
+}
+
+.parallax-content {
+  text-decoration: none;
+  flex: 1;
+}
+
+/* /////////////////77 */
+/* POP UP */
+.popup {
+  display: none;
+  animation: popupdelete 0.5s;
+}
+@keyframes popupdelete {
+  from {
+    opacity: 1;
+    top: 15%;
+  }
+  to {
+    opacity: 0;
+    top: 100%;
+  }
+}
+.popup-active {
+
+}
+.popup-overlay {
+  top: 15%;
+  position: fixed;
+  width: 98%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: popupload 0.6s;
+}
+@keyframes popupload {
+  from {
+    top: 30%;
+    opacity: 0;
+  }
+  to {
+    top: 15%;
+    opacity: 1;
+  }
+}
+.popup-content {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  overflow-y: auto;
+}
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+}
+/* ///////////////////// */
+/* 3D Figur */
+@keyframes popupdelete {
+  from {
+    opacity: 1;
+    top: 15%;
+  }
+  to {
+    opacity: 0;
+    top: 100%;
+  }
+}
+.figur-active {
+
+}
+.figur-overlay {
+  top: 15%;
+  position: fixed;
+  width: 98%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: figurload 0.6s;
+}
+@keyframes figurload {
+  from {
+    top: 30%;
+    opacity: 0;
+  }
+  to {
+    top: 15%;
+    opacity: 1;
+  }
+}
+.figur-content {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  overflow-y: auto;
+}
+.figur-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+}
+/* ///////////////////// */
+
+@media only screen and (max-width: 1000px) {
+  .cards {
+    display: block;
+  }
+  .card {
+    width: 100%;
+  }
+}
