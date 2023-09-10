@@ -1,0 +1,42 @@
+
+.log-header{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    height: 5%;
+    border: none;
+    background-color: white;
+}
+.log-element{
+    margin: 7px;
+    font-size: large;
+}
+.log-btn{
+    font-size: large;
+    border: solid 1px rgb(185, 185, 185);
+}
+.log-btn:hover{
+
+    color: white;
+    background-color: black;
+    animation: ease 1s;
+}
+.span{
+    font-size: large;
+    border-radius: 7px;
+    color: black;
+    text-decoration: none;
+    
+    padding: 7px;
+}
+.log-link{
+    font-size: large;
+    border-radius: 7px;
+    color: black;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 7px;
+    transition: all 0.5s;
+}
+.log-link:hover{
+    
+    font-size: larger;
+}

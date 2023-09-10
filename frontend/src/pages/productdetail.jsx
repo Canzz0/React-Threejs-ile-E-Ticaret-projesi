@@ -17,12 +17,12 @@ function ProductDetailComponent() {
   function togglePopup() {
     setPopup(prevPopup => !prevPopup);
   }
-  const addBasket = async(productId) =>{
-    let user = JSON.parse(localStorage.getItem("user"));
-    let model = {productId: productId, userId: user._id};
+  const addBasket = async (productId) => {
+    let userid = JSON.parse(sessionStorage.getItem("id"));
+    let model = { productId: productId, userId: userid };
     var response = await axios.post("http://localhost:5000/baskets/add", model);
     alert(response.data.message);
-}
+  }
   useEffect(() => {
     const getProductDetail = async () => {
       const response = await axios.get("http://localhost:5000/products");
@@ -107,7 +107,7 @@ function ProductDetailComponent() {
               <p className="product-price">Fiyat:{product.price}</p>
               <button className="btn btn-success m-2" onClick={togglePopup}>İncele</button>
               <br />
-              <button onClick={()=> addBasket(product._id)} className="add-to-cart" >Sepete Ekle</button>
+              <button onClick={() => addBasket(product._id)} className="add-to-cart" >Sepete Ekle</button>
             </div>
           </div>
           <div className="row mt-5 p-4">

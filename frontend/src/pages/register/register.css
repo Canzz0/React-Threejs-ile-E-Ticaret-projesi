@@ -1,0 +1,42 @@
+
+.reg-header{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    height: 5%;
+    border: none;
+    background-color: white;
+}
+.reg-element{
+    margin: 7px;
+    font-size: large;
+}
+.reg-btn{
+    font-size: large;
+    border: solid 1px rgb(185, 185, 185);
+}
+.reg-btn:hover{
+
+    color: white;
+    background-color: black;
+    animation: ease 1s;
+}
+.span{
+    font-size: large;
+    border-radius: 7px;
+    color: black;
+    text-decoration: none;
+    
+    padding: 7px;
+}
+.reg-link{
+    font-size: large;
+    border-radius: 7px;
+    color: black;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 7px;
+    transition: all 0.5s;
+}
+.reg-link:hover{
+    
+    font-size: larger;
+}

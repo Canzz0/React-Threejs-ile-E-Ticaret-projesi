@@ -1,17 +1,20 @@
 import {Link, Navigate, useNavigate} from 'react-router-dom'
 import { useState } from 'react';
 import axios from 'axios';
+import './login.css'
 function LoginComponent(){
     const navigate = useNavigate()
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
     const login = async (e)=>{
-        e.preventDefault(); //SAyfa yenileme engelleme
+        e.preventDefault(); //Sayfa yenileme engelleme
         try{
            let model = {email:email,password:password};   //Kullanıcının girdiği değerleri modele kaydediyoruz
            let response = await axios.post("http://localhost:5000/auth/login",model);  //Axios ile post işlemini yapıyoruz
-            localStorage.setItem("token",response.data.token);     //LocalStorage 'de girilen değerleri tutuyoruz
-            localStorage.setItem("user",JSON.stringify(response.data.user));
+            sessionStorage.setItem("token",response.data.token);     //sessionStorage 'de girilen değerleri tutuyoruz
+            sessionStorage.setItem("userName",JSON.stringify(response.data.user.name));
+            sessionStorage.setItem("admin",JSON.stringify(response.data.user.isAdmin));
+            sessionStorage.setItem("id",JSON.stringify(response.data.user._id));
             navigate("/");  //Direkt anasayfaya yönlendiriyoruz
         } catch (error) {
             console.log(error)
@@ -19,36 +22,37 @@ function LoginComponent(){
     }
     return (
     <>
-    <div className="d-flex justify-content-center">
+    
+    <div className="mt-5 p-5 d-flex justify-content-center align-items-center ">
         <div className="col-md-5">
-            <div className="card">
-                <div className="card-header">
+            <div className="card ">
+                <div className="card-header log-header">
                     <h1>Giriş Sayfası</h1>
                 </div>
-            <div className="card-body">
-                <form onSubmit={login}>
-                    <div className="form-group">
-                        <label htmlFor="email">Mail Adresi</label>
+            <div className="card-body p-4">
+                <form onSubmit={login} className='p-4'>
+                    <div className="form-group log-element">
+                        <label htmlFor="email"><strong>E-Posta Adresi:</strong></label>
                         <input value={email} onChange={(e)=>setEmail(e.target.value)} type="email" id="email" name="email" 
                         className="form-control"/>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Şifre</label>
+                    <div className="form-group log-element">
+                        <label htmlFor="password"><strong> Şifre:</strong></label>
                         <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" id="password" name="password"
                         className="form-control"  />
                     </div>
-                    <div className="form-group mt-2">
-                        <button className="btn btn-outline-primary w-100">
+                    <div className="form-group mt-4">
+                        <button className="btn log-btn w-100">
                             Giriş Yap
                         </button>
-                        <Link to='/register'>Kayıt Ol</Link>
                     </div>
                 </form>
+                <span className='span'>Hala kayıt olmadın mı ?</span>
+                <Link className='log-link mt-3' to='/register'>Kayıt Ol</Link>
             </div>
             </div>
         </div>
     </div>
-
         </>
     )
 }

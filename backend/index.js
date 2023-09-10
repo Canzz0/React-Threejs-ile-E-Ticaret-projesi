@@ -17,6 +17,10 @@ mongoose.connect(url).then(res =>{
 }).catch(err =>{
     console.log(err.message)
 });
+const port =5000;
+app.listen(5000,()=>{
+    console.log("Uygulama http://localhost:" + port + " üzerinde ayakta") //Uygulamanın adresini yazdırır
+});
 
 //user için Collections oluşturduk
 const userSchema = new mongoose.Schema({
@@ -25,14 +29,22 @@ const userSchema = new mongoose.Schema({
     email:String,
     password:String,
     isAdmin:Boolean,
+    Role:String,
 })
 
 const User = mongoose.model("User",userSchema) //Bilgileri mongoose model yardımı ile kullanılabilir hale getirdik
+
+const categorySchema = new mongoose.Schema({
+    _id:String,
+    name:String,
+})
+const Category = mongoose.model("Category",categorySchema)
 
 const productSchema = new mongoose.Schema({
     _id:String,
     name:String,
     description:String,
+    sellerId:String,
     stock:Number,
     price:Number,
     imageUrl:String,
@@ -49,7 +61,7 @@ const basketSchema = new mongoose.Schema({
 })
 const Basket = mongoose.model("Basket",basketSchema)
 
-const orderSchema = mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     _id:String,
     productId:String,
     userId:String,
@@ -62,47 +74,71 @@ const options ={
     expiresIn:"1h"
 }
 
-//TOKEN FİNİSH
+//MESAJLAŞMA İÇİN 
+//user için Collections oluşturduk
+const messageSchema = new mongoose.Schema({
+    _id:String,
+    sender:String,
+    sent:String,
+    message:String,
+})
+const Messages = mongoose.model("Messages",messageSchema) //Bilgileri mongoose model yardımı ile kullanılabilir hale getirdik
+
+
+const bcrypt = require('bcrypt');
 
 //Register İşlemi
 app.post("/auth/register",async(req,res)=>{
     try {
         const {name,email,password}=req.body;  //req body üzerinden verileri alır
+        //ŞİFRE hashleme için kullanıcaz
+        const saltRounds = 10; 
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
         let user = new User({
-            _id :uuidv4(),  //Benzersiz bir id ataması yapar
+            _id :uuidv4(),  
             name:name,
             email:email,
-            password:password,
+            password:hashedPassword,
             isAdmin:false
         });
-        await user.save();  //kullanıcıyı kaydeder ve kaydedesiye kadar bekler
-        const payload ={     //Burada payload adlı değişken oluşturup içine kullanıcı bilgilerini ekler
+        await user.save();  
+        const payload ={     
             user:user
         }
-        const token =jwt.sign(payload,secretKey,options)  //Bu da kullanıcı bilgilerini doğrulamak için oluşturduğumuz jwt nesneyi giriş için kullanılıcak
-        res.json({user:user,token:token})  // Bu kod, bir HTTP yanıtı döndürür ve yanıtın Content-Type özelliğini application/json olarak ayarlar.
-    }catch (error){ //Hata mesajını 500 üzerinden göstermeye yarar
+        const token =jwt.sign(payload,secretKey,options)  
+        res.json({user:user,token:token}) 
+    }catch (error){ 
             res.status(500).json({error:error.message})
     }
 })
-///LOGİN İŞLEMi
-app.post("/auth/login",async(req,res)=>{
-    try {
-        const {email,password} = req.body;
-        const users = await User.find({email:email,password:password}); //Burada doğrulama işlemi kullanıcı bulma işlemi yapılıyor
-        if (users.length==0){
-            res.status(500).json({message:"Mail adresi veya şifre yanlış"});  //Eğer kullanıcı bulunamazsa
-        }else {
-            const payload ={
-                user:users[0]  //ilk çıkan sonucu al demek için
-            }
-            const token = jwt.sign(payload,secretKey,options);
-            res.json({user:users[0],token:token})
-        }
-    } catch(error){
 
+// LOGIN İşlemi
+app.post("/auth/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email: email });
+
+        if (!user) {
+            res.status(500).json({ message: "Mail adresi veya şifre yanlış" });
+        } else {
+            // Bcrypt ile şifreyi karşılaştırma,çözümleme
+            const passwordMatch = await bcrypt.compare(password, user.password);
+
+            if (passwordMatch) {
+                const payload = {
+                    user: user
+                };
+                const token = jwt.sign(payload, secretKey, options);
+                res.json({ user: user, token: token });
+                
+            } else {
+                res.status(500).json({ message: "Mail adresi veya şifre yanlış" });
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-})
+});
 ///PRODUCT işlemleri
 
 //GET  getirme işlemleri
@@ -114,11 +150,8 @@ app.get("/products",async(req,res)=>{
         res.status(500).json({message:error.message});
     }
 })
-const port =5000;
-app.listen(5000,()=>{
-    console.log("Uygulama http://localhost:" + port + " üzerinde ayakta") //Uygulamanın adresini yazdırır
-});
-//GET  getirme işlemleri
+
+///////////////////////////////////////
 
 
 // Dosya Kayıt İşlemi
@@ -162,6 +195,7 @@ const storage = multer.diskStorage({
       }
     }
   );
+////////////////////////////////////7
 
 //Product Sİlme İşlemi 
 app.post("/products/remove",async(req,res)=>{
@@ -174,6 +208,54 @@ app.post("/products/remove",async(req,res)=>{
     }
 });
 ////////// 
+
+//CATEGORY İŞLEMLERİ
+
+//Cateogry GET getirme işlemleri
+app.get("/categories",async(req,res)=>{
+    try{
+        const categories =await Category.find({}).sort({name:1});
+        res.json(categories);
+    } catch(error){
+        res.status(500).json({message:error.message});
+    }
+})
+
+///////////////////////////////////////
+
+  // Add Category İşlemi
+  app.post(
+    "/categories/add",async (req, res) => {
+      try {
+        const {name} = req.body;
+        const category = new Category({
+          _id: uuidv4(),
+          name:name,
+        });
+        
+        await category.save();
+        
+        res.json({ message: "Kategori Kaydı Başarıyla Tamamlandı" });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+      }
+    }
+  );
+////////////////////////////////////7
+
+//Category Sİlme İşlemi 
+app.post("/categories/remove",async(req,res)=>{
+    try{
+        const {_id} = req.body;
+        await Category.findByIdAndRemove(_id);
+        res.json({message:"Category Silme İşlemi Başarıyla Tamamlandı"});
+    } catch (error){
+        res.status(500).json({message:error.message});
+    }
+});
+
+/////////////////////////
 
 
 // BASKET İŞLEMLERİ

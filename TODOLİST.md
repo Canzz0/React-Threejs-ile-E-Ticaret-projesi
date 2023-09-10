@@ -1,0 +1,16 @@
+1.SweetAlert Eklenecek
++2.LOGİN'de giriş yaparken user bilgilerinde SADECE lazım olanlar alınacak(id,name,gibi)
++3.Login sayfası yeniden yapılacak
++4.Parallax kaldırılacak
+5.Sayfalar Responsible hale getirilecek
++6.Backend'de category Scheması oluşturulacak
++7.Ürünlere Satıcı ID'de eklenecek
+8.Satıcı,Müşteri,SuperAdmin diye 3 kullanıcı rolü olacak
+    |-> Satıcı:Ürün ekleyebilecek,kendi sayfası olacak ürünlerini gördüğü,satış rakamlarıda olabilir.
+    |-> Müşteri:Ürünleri satın alabilecek bu basit hazırda var
+    |-> SuperAdmin:Satıcıları ve Müşterileri ayrı ayrı görecek,Bütün Adminsel işlemleri yapacak
+
+            OPSİYONEL ÖZELLİKLER
+1.Mesajlar bölümü olacak Müşteriler için satıcı şikayet/ürün şikayet edebilecekler.
+2.Mesaj Analizi (Bu özellik çok sonra)
+3.Müşteri Hizmetleri Olacak

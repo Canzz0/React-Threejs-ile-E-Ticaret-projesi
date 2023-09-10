@@ -6,7 +6,16 @@ function LayoutComponent(){
     const logout = () =>{
         navigate("/login");
      
-    }   
+    }
+    useEffect(() => {
+
+        if(!sessionStorage.getItem('token')){
+            navigate("/login");
+            alert('Lütfen Giriş Yapınız')
+        }
+    })
+
+    
     return (
         <>
           <nav className="navbar navbar-expand-lg mt-2  p-3">

@@ -1,0 +1,38 @@
+:root {
+    --white:#ffffff;
+    --black:#000000;
+    --blue: #2571abec;
+    --blue2:#153d5de7;
+    --white: #ffffff;
+  }
+.basket-place{
+    border: var(--white);
+    width: 99%;
+    padding: 1%;
+    border: none;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+
+}
+.basket-header{
+    border: var(--white);
+}
+.price-place{
+    border: var(--white);
+    padding: 15px;
+    font-size: larger;
+    font-weight: 800;
+
+}
+.button{
+    color: var(--white);
+    font-size: larger;
+    width: 75%;
+    background-color: var(--black);
+    transition: all 0.7s;
+}
+.button:hover{
+    transform: scale(1.1);
+    background-color: var(--white);
+    color:var(--black);
+    border: solid var(--black);
+}
