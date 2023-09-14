@@ -1,4 +1,4 @@
-import {useSelector,useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getCategory } from "../../redux/features/category/category";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -10,15 +10,13 @@ function AddProduct() {
     const [stock, setStock] = useState(0);
     const [image, setImage] = useState("");
     const [figur, setFigur] = useState("");
-    
+
     //CATEGORY GETİRME (REDUX İLE)
     const dispatch = useDispatch();
     const { category } = useSelector(state => state.category)
     useEffect(() => {
         dispatch(getCategory())
-      }, []);
-
-
+    }, []);
 
     ///EKLEME
     const add = async (e) => {
@@ -37,6 +35,9 @@ function AddProduct() {
         alert(response.data.message);
         window.location.reload('/')
     }
+    const message = useSelector((state) => state.category.message); // Redux store'dan mesajı alın
+
+    console.log(message)
     return (
         <>
             <div className="modal-dialog modal-dialog-centered" role="document">
@@ -62,7 +63,7 @@ function AddProduct() {
                                 <select className='form-control'
                                     value={categoryName} onChange={(e) => setcategoryName(e.target.value)}>
                                     {category.map((categor, index) => (
-                                        <option key={index+1}>{categor.name}</option>
+                                        <option key={index + 1}>{categor.name}</option>
                                     ))}
                                 </select>
                             </div>

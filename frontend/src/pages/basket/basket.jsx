@@ -26,6 +26,7 @@ function BasketComponent() {
             let model = { _id: _id };
             await axios.post("http://localhost:5000/baskets/remove", model);
             getAll();
+            window.location.reload()
         }
     }
 

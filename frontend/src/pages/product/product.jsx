@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import {Navigate,Link,useNavigate} from 'react-router-dom';
 import AddProduct from "./addproduct";
+import RemoveProduct from "./removeproduct";
 import './product.css'
 function ProductComponent() {
     const navigate = useNavigate();  //Navigate hooks kullanmak için
@@ -83,9 +84,7 @@ function ProductComponent() {
                                             <Link to={`/products/${product._id}`}>Detay</Link>
                                             </td>
                                             <td>
-                                                <button onClick={() => remove(product._id)} className='btn btn-outline-danger btn-sm'>
-                                                    Sil
-                                                </button>
+                                               <RemoveProduct _id={product._id}/>
                                             </td>
                                         </tr>
                                     ))}

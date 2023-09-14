@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Navigate, Link, useNavigate } from 'react-router-dom';
+import { useSelector,useDispatch } from 'react-redux';
+import { addCategory, removeCategory } from "../../../redux/features/category/category";
+
 function AddCategoryComponent() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();  //Navigate hooks kullanmak için
     const [categories, setCategories] = useState([]);
     const [name, setName] = useState("");
@@ -21,27 +25,29 @@ function AddCategoryComponent() {
     const remove = async (_id) => {
         let confirm = window.confirm("Kategori silmek istiyor musunuz?")
         if (confirm) {
-            let model = { _id: _id };
-            let response = await axios.post("http://localhost:5000/categories/remove", model);
-            alert(response.data.message);
-            getAll();
+            let model = { id: _id };
+            const action = await dispatch(removeCategory(model));
+            if (removeCategory.fulfilled.match(action)) {
+                // Ekleme işlemi başarılı olduğunda yapılacak işlemleri burada gerçekleştirin
+                
+            }
+            window.location.reload()
+
         }
     }
     ///EKLEME
     const add = async (e) => {
-        e.preventDefault();     
-        let model = { name: name };
-        console.log(model)
-        var response = await axios.post("http://localhost:5000/categories/add", model);
-        alert(response.data.message);
+        e.preventDefault();
+        let formData = { name: name };
+        const action = await dispatch(addCategory(formData));
+        if (addCategory.fulfilled.match(action)) {
+        }
         setName('');
         window.location.reload()
-        getAll();
     }
-
     //Yetki Kontrolü
     const checkIsAdmin = () => {
-        let admin = JSON.parse(localStorage.getItem("admin"));
+        let admin = JSON.parse(sessionStorage.getItem("admin"));
         if (!admin) {  //Admin değeri false ise engelle
             alert("Bu Sayfaya Erişiminiz Bulunmamaktadır")
             navigate("/");
