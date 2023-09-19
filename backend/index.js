@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     email:String,
     password:String,
     isAdmin:Boolean,
-    Role:String,
+    role:String,
 })
 
 const User = mongoose.model("User",userSchema) //Bilgileri mongoose model yardımı ile kullanılabilir hale getirdik
@@ -44,7 +44,7 @@ const productSchema = new mongoose.Schema({
     _id:String,
     name:String,
     description:String,
-    sellerId:String,
+    sellerid:String,
     stock:Number,
     price:Number,
     imageUrl:String,
@@ -57,6 +57,7 @@ const basketSchema = new mongoose.Schema({
     _id:String,
     productId:String,
     userId:String,
+    sellerId:String,
 
 })
 const Basket = mongoose.model("Basket",basketSchema)
@@ -65,6 +66,7 @@ const orderSchema = new mongoose.Schema({
     _id:String,
     productId:String,
     userId:String,
+    sellerId:String,
 })
 const Order = mongoose.model("Order",orderSchema)
 
@@ -90,7 +92,7 @@ const bcrypt = require('bcrypt');
 //Register İşlemi
 app.post("/auth/register",async(req,res)=>{
     try {
-        const {name,email,password}=req.body;  //req body üzerinden verileri alır
+        const {name,email,password,role}=req.body;  //req body üzerinden verileri alır
         //ŞİFRE hashleme için kullanıcaz
         const saltRounds = 10; 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -99,11 +101,13 @@ app.post("/auth/register",async(req,res)=>{
             name:name,
             email:email,
             password:hashedPassword,
-            isAdmin:false
+            isAdmin:false,
+            role:role
         });
         await user.save();  
         const payload ={     
-            user:user
+            user:user,
+            role:role,
         }
         const token =jwt.sign(payload,secretKey,options)  
         res.json({user:user,token:token}) 
@@ -176,13 +180,14 @@ const storage = multer.diskStorage({
     ]),
     async (req, res) => {
       try {
-        const { name,description, categoryName, stock, price } = req.body;
+        const { name,description,sellerid,categoryName, stock, price } = req.body;
         const product = new Product({
           _id: uuidv4(),
           name: name,
           description:description,
           stock: stock,
           price: price,
+          sellerid: sellerid,
           categoryName: categoryName,
           imageUrl: req.files["image"][0].path,
           figurUrl: req.files["figur"][0].path,
@@ -262,12 +267,12 @@ app.post("/categories/remove",async(req,res)=>{
 ///////AddBasket İşlemi
 app.post("/baskets/add",async(req,res)=>{
     try{
-        const {productId,userId} = req.body;//Burada userId ile productıd'yi aldık
+        const {productId,sellerId,userId} = req.body;//Burada userId ile productıd'yi aldık
         let basket = new Basket({
             _id:uuidv4(),
             productId:productId,
             userId:userId,
-
+            sellerId:sellerId,
         });
         await basket.save()
         res.json({message:"Ürün Sepete Eklendi"})
@@ -331,6 +336,7 @@ app.post("/orders/add",async(req,res)=>{
             let order = new Order({ //Yeni sipariş verisi oluşturduk
                 _id:uuidv4(), //Eşsiz bir ID
                 productId:basket.productId, //Sepetteki ürünün ID'sini aldık
+                sellerId:basket.sellerId,
                 userId:userId, //Kullanıcı ID'sini aldık ve kayıt ettik
             });
             order.save(); //Order tablosuna kayıt ettik verileri

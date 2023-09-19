@@ -17,12 +17,16 @@ function ProductDetailComponent() {
   function togglePopup() {
     setPopup(prevPopup => !prevPopup);
   }
-  const addBasket = async (productId) => {
+
+
+  const addBasket = async (productId, sellerid) => {
     let userid = JSON.parse(sessionStorage.getItem("id"));
-    let model = { productId: productId, userId: userid };
+    let model = { productId: productId, sellerId: sellerid, userId: userid };
     var response = await axios.post("http://localhost:5000/baskets/add", model);
     alert(response.data.message);
   }
+
+
   useEffect(() => {
     const getProductDetail = async () => {
       const response = await axios.get("http://localhost:5000/products");
@@ -39,6 +43,7 @@ function ProductDetailComponent() {
 
     getProductDetail();
   }, [productId]);
+
   useEffect(() => {
     setIsVisible(true); //animasyonu etkin hale getirir
     if (product) { // Ürün verileri mevcutsa sahneyi oluşturun
@@ -67,12 +72,9 @@ function ProductDetailComponent() {
           figure.scale.set(8, 8, 8) //Burada Yüklediğimiz fbx dosyasının boyunu küçülttük
           figure.position.set(0, 0, 0)
           scene.add(figure); //figur'ü scene yani ekrana ekledik
-          console.log(figure)
         })
       }
       loadModel();
-
-
       //    //ORBİT KONTOLLERİ
       const controls = new OrbitControls(camera, renderer.domElement); //mouse ile kamera kontrolü yapabilmemizi sağlar
       controls.enableDamping = true; //Yumuşak kamera hareketi için
@@ -107,7 +109,7 @@ function ProductDetailComponent() {
               <p className="product-price">Fiyat:{product.price}</p>
               <button className="btn btn-success m-2" onClick={togglePopup}>İncele</button>
               <br />
-              <button onClick={() => addBasket(product._id)} className="add-to-cart" >Sepete Ekle</button>
+              <button onClick={() => addBasket(product._id, product.sellerid)} className="add-to-cart" >Sepete Ekle</button>
             </div>
           </div>
           <div className="row mt-5 p-4">

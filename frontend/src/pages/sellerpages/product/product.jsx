@@ -1,44 +1,34 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {Navigate,Link,useNavigate} from 'react-router-dom';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
 import AddProduct from "./addproduct";
 import RemoveProduct from "./removeproduct";
 import './product.css'
 function ProductComponent() {
     const navigate = useNavigate();  //Navigate hooks kullanmak için
     const [products, setProducts] = useState([]);
+
+    const token = sessionStorage.getItem('token');
     //GETİRME
     const getAll = async () => {
-        const response = await axios.get("http://localhost:5000/products");
-        
-        setProducts(response.data);
+        try {
+            const response = await axios.get("http://localhost:5000/products", {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Tokenı ekleyin
+                }
+            });
+            setProducts(response.data);
+        } catch (error) {
+            // Hata durumlarını ele alın
+            console.error('Hata:', error);
+        }
     }
     ///Ürünlerimizi apı den Çekme işlemini yaptık 
     useEffect(() => {
         getAll();
-        checkIsAdmin();
+
         document.title = 'Ürünler';
     }, []);
-
-    const remove = async (_id) => {
-        let confirm = window.confirm("Ürünü silmek istiyor musunuz?")
-        if (confirm) {
-            let model = { _id: _id };
-            let response = await axios.post("http://localhost:5000/products/remove", model);
-            alert(response.data.message);
-            getAll();
-        }
-    }
-   
-
-    //Yetki Kontrolü
-    const checkIsAdmin = () =>{   
-        let admin =JSON.parse(sessionStorage.getItem("admin"));
-        if (!admin){  //Admin değeri false ise engelle
-            alert("Bu Sayfaya Erişiminiz Bulunmamaktadır")
-            navigate("/");
-        }
-    }
 
     return (
 
@@ -69,8 +59,8 @@ function ProductComponent() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {products.map((product, index) => (
-                                        <tr key={index}>
+                                    {products.map((product, index) => {
+                                        return (<tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>
                                                 <img style={{ width: "75px" }} src={'http://localhost:5000/' + product.imageUrl} />
@@ -80,14 +70,14 @@ function ProductComponent() {
                                             <td>{product.stock}</td>
                                             <td>{product.price}</td>
                                             <td>
-                                            {/* Ürün detay sayfası linki */}
-                                            <Link to={`/products/${product._id}`}>Detay</Link>
+                                                {/* Ürün detay sayfası linki */}
+                                                <Link to={`/products/${product._id}`}>Detay</Link>
                                             </td>
                                             <td>
-                                               <RemoveProduct _id={product._id}/>
+                                                <RemoveProduct _id={product._id} />
                                             </td>
-                                        </tr>
-                                    ))}
+                                        </tr>)
+                                    })}
                                 </tbody>
 
                             </table>

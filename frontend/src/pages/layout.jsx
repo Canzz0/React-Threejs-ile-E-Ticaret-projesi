@@ -27,8 +27,7 @@ function LayoutComponent(){
             <div className="collapse navbar-collapse" id="navbarCollapse">
                 <div className="navbar-nav">
                     <Link to="/home" className="nav-item nav-link navbar-dark">Anasayfa</Link>
-                    
-                   
+                    <Link to="/products" className="nav-item nav-link navbar-dark">Ürün Ekle</Link>
                     <Link to="/shop" className="nav-item nav-link navbar-dark">Alışveriş</Link>
                     <Link to="/basket" className="nav-item nav-link navbar-dark">Sepetim</Link>
                 </div>

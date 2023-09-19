@@ -5,18 +5,22 @@ import {BrowserRouter, Route,Routes} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import LayoutComponent from './pages/layout';
 import HomeComponent from './pages/home/home';
-import ProductComponent from './pages/product/product';
-import OrderComponent from './pages/order';
-import BasketComponent from './pages/basket/basket';
+import ProductComponent from './pages/sellerpages/product/product';
+import OrderComponent from './pages/customerpages/order';
+import BasketComponent from './pages/customerpages/basket/basket';
 import LoginComponent from './pages/login/login';
 import RegisterComponent from './pages/register/register';
-import ProductDetailComponent from './pages/productdetail';
-import ShopComponent from './pages/shop';
+import ProductDetailComponent from './pages/customerpages/productdetail';
+import ShopComponent from './pages/customerpages/basket/shop';
 import AddCategoryComponent from './pages/category/addcategorypage/addcategory';
 import { Provider } from 'react-redux';
 import { store } from './redux/app/store';
+import SellerHomeComponent from './pages/sellerpages/sellerhome/sellerhome';
 
 
+const token = sessionStorage.getItem('token');
+
+console.log(token)
 
 function AppComponent (){
   return (
@@ -27,6 +31,7 @@ function AppComponent (){
        <Route path='/' element={<LayoutComponent/>} >  //Burada navbar için aşağıdaki route elementlerini layout componentinde kullanılması için iç içe yazdık 
         <Route index element={<HomeComponent/>}></Route>
         <Route  path='products' element={<ProductComponent/>}></Route>
+        <Route path='sellerhome' element={<SellerHomeComponent/>}></Route>
         <Route  path='home' element={<HomeComponent/>}></Route>
         <Route path='orders' element={<OrderComponent/>}></Route>
         <Route path='shop' element={<ShopComponent/>}></Route>
