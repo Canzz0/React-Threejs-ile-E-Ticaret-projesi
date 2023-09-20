@@ -1,0 +1,13 @@
+.chart-place {
+              display:grid;
+              grid-auto-flow: column;
+              
+}
+
+@media only screen and (max-width:900px) {
+              .chart-place {
+              display: block;
+              
+              }
+
+}

@@ -36,7 +36,7 @@ function BasketComponent() {
         let model = { userId: userid };
         await axios.post("http://localhost:5000/orders/add", model);
         alert('Siparişiniz Oluşturuldu');
-        window.location.reload()
+        window.location.reload('/')
 
     }
 

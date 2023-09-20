@@ -29,7 +29,7 @@ function AddProduct() {
         formData.append("categoryName", categoryName);
         formData.append("stock", stock);
         formData.append("price", price);
-        formData.append("sellerid", sessionStorage.getItem('id'));
+        formData.append("sellerid", sessionStorage.getItem("id"));
         formData.append("image", imageInput.files[0], imageInput.files[0].name);
         formData.append("figur", figurInput.files[0], figurInput.files[0].name);
         var response = await axios.post("http://localhost:5000/products/add", formData);

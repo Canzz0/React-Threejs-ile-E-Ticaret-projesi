@@ -33,7 +33,6 @@ function ProductComponent() {
     return (
 
         <>
-            <title>Product</title>
             <div className="p-5 mt-2">
                 <div className="card">
                     <div className="card-header">
