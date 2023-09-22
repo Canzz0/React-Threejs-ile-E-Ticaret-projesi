@@ -70,14 +70,8 @@ const orderSchema = new mongoose.Schema({
 })
 const Order = mongoose.model("Order", orderSchema)
 
-//TOKEN
-const secretKey = "Gizli Anahtar";
-const options = {
-    expiresIn: "1h"
-}
 
 //MESAJLAŞMA İÇİN 
-//user için Collections oluşturduk
 const messageSchema = new mongoose.Schema({
     _id: String,
     sender: String,
@@ -85,6 +79,13 @@ const messageSchema = new mongoose.Schema({
     message: String,
 })
 const Messages = mongoose.model("Messages", messageSchema) //Bilgileri mongoose model yardımı ile kullanılabilir hale getirdik
+
+//TOKEN
+const secretKey = "Gizli Anahtar";
+const options = {
+    expiresIn: "1h"
+}
+
 
 
 const bcrypt = require('bcrypt');
@@ -386,6 +387,14 @@ app.get("/orders", async (req, res) => {
                 $lookup: {
                     from: "users", // ilişkili tablo
                     localField: "sellerId", // orderda karşılığı
+                    foreignField: "_id", // users'da karşılığı
+                    as: "sellerInfo" // saklanacak alan bunun üzerinden çağırıcaz
+                }
+            },
+            {
+                $lookup: {
+                    from: "users", // ilişkili tablo
+                    localField: "userId", // orderda karşılığı
                     foreignField: "_id", // users'da karşılığı
                     as: "userInfo" // saklanacak alan bunun üzerinden çağırıcaz
                 }

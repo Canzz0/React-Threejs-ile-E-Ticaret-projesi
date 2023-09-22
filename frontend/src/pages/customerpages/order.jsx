@@ -1,18 +1,29 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-function OrderComponent(){
+function OrderComponent() {
     const [orders, setOrders] = useState([]);  //Basket değerleri alma güncelleme için
-  
+    const token = sessionStorage.getItem('token');
+
+    //GETİRME
     const getAll = async () => {
-        let user = JSON.parse(localStorage.getItem("user"));
-        let model = { userId: user._id };//bunu backend'e göndermek için yaptık
-        let response = await axios.post("http://localhost:5000/orders/getAll", model);//Backend'e userId gönderdik değerleri alabilmek için
-        setOrders(response.data);
+        try {
+            const response = await axios.get("http://localhost:5000/orders", {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Tokenı ekleyin
+                }
+            });
+            setOrders(response.data);
+        } catch (error) {
+            // Hata durumlarını ele alın
+            console.error('Hata:', error);
+        }
     }
-    useEffect(()=>{
+    ///Ürünlerimizi apı den Çekme işlemini yaptık 
+    useEffect(() => {
         getAll();
-    },[])
- 
+    }, []);
+
+
     return (
         <>
             <title>Siparişlerim</title>
@@ -30,22 +41,32 @@ function OrderComponent(){
                                             <th>#</th>
                                             <th>Ürün Adı</th>
                                             <th>Kategori Adı</th>
-                                       
+
                                             <th>Birim Fiyatı</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {orders.map((order, index) => (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{order.products[0].name}</td>
-                                                <td>{order.products[0].categoryName}</td>
-                                                <td>{order.products[0].price}</td>
-                                                <td>
-                                                
-                                            </td>
-                                            </tr>
+                                            order.productInfo.map((product) => {
+                                                if ('"' + product.userId + '"' === sessionStorage.getItem('id')) {
+                                                    return (
+                                                        <tr key={product._id}>
+                                                            <td>{index + 1}</td>
+                                                            <td>{product.name}</td>
+                                                            <td>{product.price}</td>
+                                                            <td>{product.categoryName}</td>
+                                                        </tr>
+                                                    );
+                                                } else {
+                                                    return (
+                                                        <tr>
+
+                                                            <td colSpan="4">Bilgi Bulunamadı</td>
+                                                        </tr>
+                                                    );
+                                                }
+                                            })
                                         ))}
                                     </tbody>
                                 </table>

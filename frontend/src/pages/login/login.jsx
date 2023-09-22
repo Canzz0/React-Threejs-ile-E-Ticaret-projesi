@@ -16,7 +16,7 @@ function LoginComponent() {
                 sessionStorage.setItem("token", response.data.token);     //sessionStorage 'de girilen değerleri tutuyoruz
                 sessionStorage.setItem("userName", JSON.stringify(response.data.user.name));
                 sessionStorage.setItem("admin", JSON.stringify(response.data.user.isAdmin));
-                sessionStorage.setItem('id', JSON.stringify(response.data.user._id));
+                sessionStorage.setItem("id", JSON.stringify(response.data.user._id));
                 navigate("/");  //Direkt anasayfaya yönlendiriyoruz
             } catch (error) {
                 console.log(error)

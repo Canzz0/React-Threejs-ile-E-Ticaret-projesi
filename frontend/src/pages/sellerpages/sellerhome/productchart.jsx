@@ -30,28 +30,28 @@ const ProductChartComponent = () => {
 
   const groupAndSumProducts = (productInfo) => {
     const groupedProducts = {};
-    productInfo.forEach((product) => {  
-      const { _id, name,sellerId } = product;
-      if ('"'+product.sellerid+'"' === sessionStorage.getItem('id')) {
-        if (!groupedProducts[_id]) {
+    productInfo.forEach((product) => {
+      const { _id, name, sellerId } = product;
+      if ('"' + product.sellerid + '"' === sessionStorage.getItem('id')) {   //giriş yapan kullanıcıya ait bilgiler
+        if (!groupedProducts[_id]) {   //Eğer buna ait id'li product değeri yoksa
           groupedProducts[_id] = {
             id: _id,
             name: name,
-            sellerId:sellerId,
+            sellerId: sellerId,
             total: 1,
           };
-          
-        } else {
-          groupedProducts[_id].total += 1;
+
+        } else {  //Eğer buna ait id'li product değeri varsa
+          groupedProducts[_id].total += 1;  
         }
-      } 
-      
+      }
+
     });
 
-    return Object.values(groupedProducts);
+    return Object.values(groupedProducts); //Diziye dönüştürdük
   };
 
-  const groupedProducts = groupAndSumProducts(
+  const groupedProducts = groupAndSumProducts(   //Grupladık
     orders.flatMap((order) => order.productInfo)
   );
 
@@ -62,15 +62,18 @@ const ProductChartComponent = () => {
         data: groupedProducts.map((product) => product.total),
         backgroundColor: ['#CAE7E8', '#A2D7DD', '#78CDD7'],
         hoverBackgroundColor: ['#6ed9ff', '#247a9d', '#1e2c37'],
-        
+
       },
     ],
   };
-  return (
+  return (<>
+    <h1 className='justify-content-center mt-2 text-center'>Satış Analizleri</h1>
     <div className='chart-place'>
       <PieChart data={data} />
       <LineChart data={data} />
     </div>
+  </>
+
   );
 };
 

@@ -9,12 +9,12 @@ function LineChart ({ data }) {
         beginAtZero: true, // y eksenini 0'dan başlatma
       },
     },
-
+    
   };
 
   return (
     <div  className="chart-container">
-    <h2 >Line Chart</h2>
+    <h2 className='text-center'>Çizgi Analizi</h2>
     <Line
       data={data}
       options={options}

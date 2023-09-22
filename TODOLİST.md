@@ -9,8 +9,10 @@
     |-> Satıcı:Ürün ekleyebilecek,kendi sayfası olacak ürünlerini gördüğü,satış rakamlarıda olabilir.
     |-> Müşteri:Ürünleri satın alabilecek bu basit hazırda var
     |-> SuperAdmin:Satıcıları ve Müşterileri ayrı ayrı görecek,Bütün Adminsel işlemleri yapacak
-
+9.Order Sayfası Yapılacak
             OPSİYONEL ÖZELLİKLER
 1.Mesajlar bölümü olacak Müşteriler için satıcı şikayet/ürün şikayet edebilecekler.
 2.Mesaj Analizi (Bu özellik çok sonra)
 3.Müşteri Hizmetleri Olacak
+ Müşteri hizmetlerini sadece admin bakacak,o ilgilenecek,mesajlar şemasında birde görüldü özelliği olacak ve false olacak tıkladığımızda yada cevap yazdığımızda true olacak.
+ 
