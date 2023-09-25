@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const express = require("express");
 const app = express();
+
 const { v4: uuidv4 } = require("uuid");
 const multer = require("multer");
 const cors = require("cors");
@@ -77,6 +78,8 @@ const messageSchema = new mongoose.Schema({
     sender: String,
     sent: String,
     message: String,
+    date: Date,
+    seen:String,
 })
 const Messages = mongoose.model("Messages", messageSchema) //Bilgileri mongoose model yardımı ile kullanılabilir hale getirdik
 
@@ -248,7 +251,7 @@ app.post(
         }
     }
 );
-////////////////////////////////////7
+////////////////////////////////////
 
 //Category Sİlme İşlemi 
 app.post("/categories/remove", async (req, res) => {
@@ -406,4 +409,68 @@ app.get("/orders", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+
+////////////////////////////////////7
+
+////MESAJ İŞLEMLERİ
+
+//Mesaj GET İŞLEMİ 
+app.get("/messages", async (req, res) => {
+    try {
+        const messages = await Messages.find({}).sort({ name: 1 });
+        res.json(messages);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+
+//SOCKETİO
+const http = require('http');
+
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server, {
+    cors: {
+        origin: 'http://localhost:3000',
+        methods:['GET','POST']
+    }
+})
+// Socket.io bağlantısı
+io.on('connection', (socket) => {
+    console.log('Yeni bir kullanıcı bağlandı');
+  
+    socket.on('message', async (messageData) => {
+        try {
+            const message=new Messages({
+            _id:uuidv4(),
+            message:messageData.message,
+            sent:messageData.sent,
+            sender:messageData.sender,
+            date:messageData.date,
+            seen:messageData.seen
+          });
+          await message.save();
+    
+            // Tüm istemcilere yeni mesajı gönderin
+            io.emit('message', message);
+
+            // Mesajı gönderen istemciye geri döndürün
+            socket.broadcast.emit('returnMessage', message);
+
+        } catch (error) {
+          console.error(error);
+        }
+      });
+  
+    // Kullanıcı bağlantısını kes
+    socket.on('disconnect', () => {
+      console.log('Bir kullanıcı ayrıldı');
+    });
+  });
+  
+  server.listen(3001, () => {
+    console.log('Sunucu 3001 portunda çalışıyor');
+  });
+
 

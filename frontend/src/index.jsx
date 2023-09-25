@@ -16,6 +16,7 @@ import AddCategoryComponent from './pages/category/addcategorypage/addcategory';
 import { Provider } from 'react-redux';
 import { store } from './redux/app/store';
 import SellerHomeComponent from './pages/sellerpages/sellerhome/sellerhome';
+import AdminChat from './chatwidget/adminchat';
 
 
 const token = sessionStorage.getItem('token');
@@ -37,11 +38,12 @@ function AppComponent (){
         <Route path='shop' element={<ShopComponent/>}></Route>
         <Route path='basket' element={<BasketComponent/>}></Route>
         <Route exact path="/products/:productId" element={<ProductDetailComponent/>} />
-        <Route path='addcategory' element={<AddCategoryComponent/>}></Route>  
+        <Route path='addcategory' element={<AddCategoryComponent/>}></Route>
+        <Route  path='adminchat' element={<AdminChat/>}></Route>  
       </Route>
       <Route path='login' element={<LoginComponent/>}></Route>       //LOGİN VEAYA REGİSTER sayfalarında navbar olmayacağı için içine yazmadık
       <Route path='register' element={<RegisterComponent/>}></Route>
-
+      
     </Routes>
 
     </BrowserRouter>

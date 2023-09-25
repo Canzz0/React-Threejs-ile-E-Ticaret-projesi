@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './home.css';
+import ChatWidget from '../../chatwidget/chatwidget';
 
 function HomeComponent() {
     useEffect(() => {
@@ -53,7 +54,8 @@ function HomeComponent() {
                         <img src={require('./images/shoes.png')} className="image" alt="ayakkabı" />
                     </div>
                 </Link>
-        
+                
+        <ChatWidget />
         </>)
 }
 export default HomeComponent;
