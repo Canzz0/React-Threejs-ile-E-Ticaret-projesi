@@ -1,3 +1,4 @@
+/////       #React(Front-End)Özellikleri
 1.SweetAlert Eklenecek
 +2.LOGİN'de giriş yaparken user bilgilerinde SADECE lazım olanlar alınacak(id,name,gibi)
 +3.Login sayfası yeniden yapılacak
@@ -10,9 +11,21 @@
     |-> Müşteri:Ürünleri satın alabilecek bu basit hazırda var
     |-> SuperAdmin:Satıcıları ve Müşterileri ayrı ayrı görecek,Bütün Adminsel işlemleri yapacak
 9.Order Sayfası Yapılacak
-            Mesajlaşma Özellikleri
+10.Clean Code'a uygun hale getirilecek
+
+/////            #Mesajlaşma Özellikleri
 +1.Mesajlar bölümü olacak Müşteriler için satıcı şikayet/ürün şikayet edebilecekler.
 2.Mesaj Analizi (Bu özellik çok sonra)
 +3.Müşteri Hizmetleri Olacak
  Müşteri hizmetlerini sadece admin bakacak,o ilgilenecek,mesajlar şemasında birde görüldü özelliği olacak ve false olacak tıkladığımızda yada cevap yazdığımızda true olacak.
  
+/////            #Redux Özellikleri
+1.Bütün özelliklere redux'a geçirilecek
+2.jsx bağlantıları sağlanacak
+
+
+
+/////            #BackEnd Özellikleri
+1.RestFul APİ Geçilecek
+2.Clean Code'a uygun hale getirilecek
+3.Tokenization getirilecek.
