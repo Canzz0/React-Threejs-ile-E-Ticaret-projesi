@@ -1,16 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './adminchat.css';
+import axios from "axios";
 
 function AdminChat() {
-  const [contacts, setContacts] = useState([
-    { id: 1, name: 'Kişi 1' },
-    { id: 2, name: 'Kişi 2' },
-    { id: 3, name: 'Kişi 3' },
-    // Diğer kişileri burada listeye ekleyin
-  ]);
   const [selectedContact, setSelectedContact] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [groupedContacts, setGroupedContacts] = useState([]); // Add state for grouped contacts
+
+  const token = sessionStorage.getItem('token');
+
+  //GETİRME
+  const getAll = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/messages", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setMessages(response.data);
+    } catch (error) {
+      console.error('Hata:', error);
+    }
+  }
+
+  useEffect(() => {
+    getAll();
+    document.title = 'AdminChat';
+
+    // Group messages by sender
+    const groupContacts = groupMessageContact(messages);
+    setGroupedContacts(groupContacts);
+  }, [messages]); // Update grouped contacts when messages change
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== '') {
@@ -22,16 +43,32 @@ function AdminChat() {
     }
   };
 
+  const groupMessageContact = (messages) => {
+    const groupedContact = {};
+    messages.forEach((message) => {
+      const { senderId } = message;
+      if (!groupedContact[senderId]) {
+        groupedContact[senderId] = {
+          senderId: senderId,
+          total: 1,
+        };
+      } else {
+        groupedContact[senderId].total += 1;
+      }
+    });
+    console.log(groupedContact)
+
+    return Object.values(groupedContact);
+  };
   return (
     <div className="App">
       <div className="contact-list">
-        {contacts.map((contact) => (
+        {groupedContacts.map((contact) => (
           <div
-            className={`contact ${selectedContact === contact.id ? 'selected' : ''}`}
-            key={contact.id}
-            onClick={() => setSelectedContact(contact.id)}
-          >
-            {contact.name}
+            className={`contact ${selectedContact === contact.senderId ? 'selected' : ''}`}
+            key={contact._id}
+            onClick={() => setSelectedContact(contact.senderId)}>
+            {contact.senderId} ({contact.total})
           </div>
         ))}
       </div>

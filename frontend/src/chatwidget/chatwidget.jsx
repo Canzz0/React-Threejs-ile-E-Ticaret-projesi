@@ -22,9 +22,9 @@ function ChatWidget() {
 
   const handleSendMessage = async () => {
     const messageContent = {
-      sent: 'admin',
+      sentId: 'admin',
       message: message,
-      sender: sessionStorage.getItem('id'),
+      senderId: sessionStorage.getItem('id'),
       date: (new Date(Date.now)).getHours() + ':' + (new Date(Date.now)).getMinutes(),
       seen:false
     }
@@ -47,7 +47,7 @@ function ChatWidget() {
         <div className="content mb-2">
         <div className="message-list">
           {messageList.map((msg, index) => (
-            msg.sender ? (
+            msg.senderId ? (
               <div className='chat-bubble right' key={index}>
                 <p>{msg.message}</p>
               </div>

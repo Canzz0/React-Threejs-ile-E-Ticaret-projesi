@@ -75,8 +75,8 @@ const Order = mongoose.model("Order", orderSchema)
 //MESAJLAŞMA İÇİN 
 const messageSchema = new mongoose.Schema({
     _id: String,
-    sender: String,
-    sent: String,
+    senderId: String,
+    sentId: String,
     message: String,
     date: Date,
     seen:String,
@@ -418,7 +418,16 @@ app.get("/orders", async (req, res) => {
 //Mesaj GET İŞLEMİ 
 app.get("/messages", async (req, res) => {
     try {
-        const messages = await Messages.find({}).sort({ name: 1 });
+        const messages = await Messages.aggregate([
+            {
+                $lookup: {
+                    from: "users", // ilişkili tablo
+                    localField: "senderId", // messages'de karşılığı
+                    foreignField: "_id", // users'da karşılığı
+                    as: "senderInfo" // saklanacak alan bunun üzerinden çağırıcaz
+                }
+            },
+        ]);
         res.json(messages);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -445,9 +454,8 @@ io.on('connection', (socket) => {
             const message=new Messages({
             _id:uuidv4(),
             message:messageData.message,
-            sent:messageData.sent,
-            sender:messageData.sender,
-            date:messageData.date,
+            sentId:messageData.sentId,
+            senderId:messageData.senderId,
             seen:messageData.seen
           });
           await message.save();
