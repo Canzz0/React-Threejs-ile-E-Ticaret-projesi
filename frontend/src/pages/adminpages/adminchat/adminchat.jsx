@@ -12,8 +12,9 @@ function AdminChat() {
   const [newMessage, setNewMessage] = useState('');
   const [groupedContacts, setGroupedContacts] = useState([]);
   const [receivedId, setReceivedId] = useState([]);
+  const [userInfo,setUserInfo] = useState([]);
   const token = sessionStorage.getItem('token');
-
+  
   //GETİRME
   const getAll = async () => {
     try {
@@ -23,13 +24,11 @@ function AdminChat() {
         }
       });
       setMessages(response.data);
+      
     } catch (error) {
       console.error('Hata:', error);
     }
   }
-
-
-
 
   const SelectContact = (id) => {
     console.log("Seçilen ID:", id);
@@ -75,6 +74,7 @@ function AdminChat() {
 
   };
   useEffect(() => {
+
     getAll();
     document.title = 'AdminChat';
     const groupContacts = groupMessageContact(messages);
@@ -87,29 +87,29 @@ function AdminChat() {
     <div className="App">
       <div className="contact-list">
         {groupedContacts.map((contact) => (
-          (contact.senderId!=='admin' && contact.senderId!==sessionStorage.getItem('id')) ? (
-          <div
-            className={`contact ${selectedContact === contact.senderId ? 'selected' : ''}`}
-            key={contact.senderId}
-            onClick={() => SelectContact(contact.senderId)}>
-            ({contact.senderId})
-          </div>
-          ):null
+          (contact.senderId !== 'admin' && contact.senderId !== sessionStorage.getItem('id')) ? (
+            <div
+              className={`contact ${selectedContact === contact.senderId ? 'selected' : ''}`}
+              key={contact.senderId}
+              onClick={() => SelectContact(contact.senderId)}>
+              ({contact.senderId})
+            </div>
+          ) : null
         ))}
       </div>
       <div className="message-container">
         <div className="message-list">
-        {messages.map((message, index) => (
-            (message.receivedId==='admin' && message.senderId==selectedContact) ? (
-              <div className='messages right' key={index}>
-                <p>{message.message}</p>
-              </div>
-            ) : (message.senderId==='admin' && message.receivedId==selectedContact) ? (
+          {messages.map((message, index) => (
+            (message.receivedId === 'admin' && message.senderId == selectedContact) ? (
               <div className='messages left' key={index}>
                 <p>{message.message}</p>
               </div>
+            ) : (message.senderId === 'admin' && message.receivedId == selectedContact) ? (
+              <div className='messages right' key={index}>
+                <p>{message.message}</p>
+              </div>
             ) : null
-            ))}
+          ))}
         </div>
         <div className="message-input">
           <input

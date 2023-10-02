@@ -99,15 +99,15 @@
   max-width: 70%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   display: flex;
-  justify-content: center;
-  align-items: center;
+
 }
 
 /* Sağdan gelen sohbet baloncuğu stil */
 .chat-bubble.right {
   background-color: #0084ff;
   color: white;
-  align-self: flex-end;
+  text-align: right; 
+  margin-left: auto; 
 }
 
 /* Soldan gelen sohbet baloncuğu stil */
@@ -115,4 +115,6 @@
   background-color: #e5e5ea;
   color: #333;
   align-self: flex-start;
+  text-align: left; 
+  margin-right: auto; 
 }

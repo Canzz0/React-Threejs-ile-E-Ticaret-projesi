@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import {BrowserRouter, Route,Routes} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import LayoutComponent from './pages/layout';
+import LayoutComponent from './components/layout';
 import HomeComponent from './pages/home/home';
 import ProductComponent from './pages/sellerpages/product/product';
 import OrderComponent from './pages/customerpages/order';
@@ -12,11 +12,11 @@ import LoginComponent from './pages/login/login';
 import RegisterComponent from './pages/register/register';
 import ProductDetailComponent from './pages/customerpages/productdetail';
 import ShopComponent from './pages/customerpages/basket/shop';
-import AddCategoryComponent from './pages/category/addcategorypage/addcategory';
+import AddCategoryComponent from './pages/adminpages/addcategorypage/addcategory';
 import { Provider } from 'react-redux';
 import { store } from './redux/app/store';
 import SellerHomeComponent from './pages/sellerpages/sellerhome/sellerhome';
-import AdminChat from './chatwidget/adminchat';
+import AdminChat from './pages/adminpages/adminchat/adminchat';
 
 
 const token = sessionStorage.getItem('token');

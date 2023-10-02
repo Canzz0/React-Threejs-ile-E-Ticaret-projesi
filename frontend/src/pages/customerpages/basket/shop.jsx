@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from "axios";
-import CategoryComponent from '../../category/category';
+import CategoryComponent from '../../../components/category/category';
 function ShopComponent() {
     const [products, setProducts] = useState([]);
     const [isVisible, setIsVisible] = useState(false); //Sayfanın animasyonu için ben yavaş yüklenme animasyonu kullandım

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './home.css';
-import ChatWidget from '../../chatwidget/chatwidget';
+import ChatWidget from '../../components/chatwidget/chatwidget';
 
 function HomeComponent() {
     useEffect(() => {

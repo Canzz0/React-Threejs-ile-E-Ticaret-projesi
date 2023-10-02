@@ -50,14 +50,18 @@
   max-width: 70%;
   display: flex;
 }
-.left{
-  background-color: #0084ff;
-  color: white;
+.right {
+  background-color: #007bff;
+  color: #fff;
+  text-align: right; 
+  margin-left: auto; 
 }
-.right{
-  background-color: #e5e5ea;
-  color: #333;
-  align-items: flex-end;
+
+.left {
+  background-color: #f1f1f1; 
+  color: #333; 
+  text-align: left; 
+  margin-right: auto; 
 }
 
 

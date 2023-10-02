@@ -8,7 +8,6 @@ function ChatWidget() {
   const [chatOpen, setChatOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
-  const [firstMessage, setFirstMessage] = useState(true);
 
   useEffect(() => {
     socket.on('returnMessage', (message) => {
