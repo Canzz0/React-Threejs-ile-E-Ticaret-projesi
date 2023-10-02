@@ -43,7 +43,7 @@ function AdminChat() {
     const messageContent = {
       receivedId: selectedContact,
       message: newMessage,
-      senderId: sessionStorage.getItem('id'),
+      senderId: 'admin',
       date: (new Date(Date.now)).getHours() + ':' + (new Date(Date.now)).getMinutes(),
       seen: false
     }
@@ -87,23 +87,29 @@ function AdminChat() {
     <div className="App">
       <div className="contact-list">
         {groupedContacts.map((contact) => (
-          (contact.senderId!==sessionStorage.getItem('id')) ? (
+          (contact.senderId!=='admin' && contact.senderId!==sessionStorage.getItem('id')) ? (
           <div
             className={`contact ${selectedContact === contact.senderId ? 'selected' : ''}`}
             key={contact.senderId}
             onClick={() => SelectContact(contact.senderId)}>
-            ({contact.senderId}), ({contact.total})
+            ({contact.senderId})
           </div>
           ):null
         ))}
       </div>
       <div className="message-container">
         <div className="message-list">
-          {messages.map((message, index) => (
-            <div className={`message ${message.senderId === selectedContact ? 'right' : 'left'}`} key={index}>
-              {message.message}
-            </div>
-          ))}
+        {messages.map((message, index) => (
+            (message.receivedId==='admin' && message.senderId==selectedContact) ? (
+              <div className='messages right' key={index}>
+                <p>{message.message}</p>
+              </div>
+            ) : (message.senderId==='admin' && message.receivedId==selectedContact) ? (
+              <div className='messages left' key={index}>
+                <p>{message.message}</p>
+              </div>
+            ) : null
+            ))}
         </div>
         <div className="message-input">
           <input
