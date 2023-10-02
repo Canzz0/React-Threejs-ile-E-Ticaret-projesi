@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './adminchat.css';
 import axios from "axios";
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001');
+
 
 function AdminChat() {
-  const [selectedContact, setSelectedContact] = useState(null);
+  const [selectedContact, setSelectedContact] = useState();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const [groupedContacts, setGroupedContacts] = useState([]); // Add state for grouped contacts
-
+  const [groupedContacts, setGroupedContacts] = useState([]);
+  const [receivedId, setReceivedId] = useState([]);
   const token = sessionStorage.getItem('token');
 
   //GETİRME
@@ -24,68 +28,87 @@ function AdminChat() {
     }
   }
 
-  useEffect(() => {
-    getAll();
-    document.title = 'AdminChat';
 
-    // Group messages by sender
-    const groupContacts = groupMessageContact(messages);
-    setGroupedContacts(groupContacts);
-  }, [messages]); // Update grouped contacts when messages change
 
-  const handleSendMessage = () => {
-    if (newMessage.trim() !== '') {
-      setMessages([
-        ...messages,
-        { text: newMessage, type: 'sent', contactId: selectedContact },
-      ]);
-      setNewMessage('');
-    }
+
+  const SelectContact = (id) => {
+    console.log("Seçilen ID:", id);
+    setSelectedContact(id);
   };
+
+
+
+
+  const handleSendMessage = async () => {
+    const messageContent = {
+      receivedId: selectedContact,
+      message: newMessage,
+      senderId: sessionStorage.getItem('id'),
+      date: (new Date(Date.now)).getHours() + ':' + (new Date(Date.now)).getMinutes(),
+      seen: false
+    }
+    socket.emit('message', messageContent);
+    setMessages((prev) => [...prev, messageContent])
+    setNewMessage('')
+  }
+
 
   const groupMessageContact = (messages) => {
     const groupedContact = {};
     messages.forEach((message) => {
-      const { senderId } = message;
+      const { receivedId, senderId } = message;
       if (!groupedContact[senderId]) {
         groupedContact[senderId] = {
+          receivedId: receivedId,
           senderId: senderId,
           total: 1,
         };
+        setReceivedId(groupedContact[senderId])
       } else {
         groupedContact[senderId].total += 1;
+
       }
     });
-    console.log(groupedContact)
+
 
     return Object.values(groupedContact);
+
   };
+  useEffect(() => {
+    getAll();
+    document.title = 'AdminChat';
+    const groupContacts = groupMessageContact(messages);
+    setGroupedContacts(groupContacts);
+  }, [messages]);
+
+
+
   return (
     <div className="App">
       <div className="contact-list">
         {groupedContacts.map((contact) => (
+          (contact.senderId!==sessionStorage.getItem('id')) ? (
           <div
             className={`contact ${selectedContact === contact.senderId ? 'selected' : ''}`}
-            key={contact._id}
-            onClick={() => setSelectedContact(contact.senderId)}>
-            {contact.senderId} ({contact.total})
+            key={contact.senderId}
+            onClick={() => SelectContact(contact.senderId)}>
+            ({contact.senderId}), ({contact.total})
           </div>
+          ):null
         ))}
       </div>
       <div className="message-container">
         <div className="message-list">
-          {messages
-            .filter((message) => message.contactId === selectedContact)
-            .map((message, index) => (
-              <div className={`message ${message.type}`} key={index}>
-                {message.text}
-              </div>
-            ))}
+          {messages.map((message, index) => (
+            <div className={`message ${message.senderId === selectedContact ? 'right' : 'left'}`} key={index}>
+              {message.message}
+            </div>
+          ))}
         </div>
         <div className="message-input">
           <input
             type="text"
-            placeholder="Mesajınızı yazın..."
+            placeholder="Mesajınızı yazın"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
           />

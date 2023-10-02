@@ -22,11 +22,11 @@ function ChatWidget() {
 
   const handleSendMessage = async () => {
     const messageContent = {
-      sentId: 'admin',
+      receivedId: 'admin',
       message: message,
       senderId: sessionStorage.getItem('id'),
       date: (new Date(Date.now)).getHours() + ':' + (new Date(Date.now)).getMinutes(),
-      seen:false
+      seen: false
     }
     socket.emit('message', messageContent);
     setMessageList((prev) => [...prev, messageContent])
@@ -45,15 +45,19 @@ function ChatWidget() {
       </div>
       {chatOpen && (
         <div className="content mb-2">
-        <div className="message-list">
+          <div className="message-list">
           {messageList.map((msg, index) => (
-            msg.senderId ? (
+            (msg.receivedId===sessionStorage.getItem('id')) ? (
+              <div className='chat-bubble left' key={index}>
+                <p>{msg.message}</p>
+              </div>
+            ) : (msg.senderId===sessionStorage.getItem('id')) ? (
               <div className='chat-bubble right' key={index}>
                 <p>{msg.message}</p>
               </div>
             ) : null
-          ))}
-        </div>
+            ))}
+          </div>
           <div className="message-form mb-2 pb-2">
             <textarea
               type="text"
@@ -66,8 +70,8 @@ function ChatWidget() {
             </button>
           </div>
         </div>
-  )
-}
+      )
+      }
     </div >
   );
 }

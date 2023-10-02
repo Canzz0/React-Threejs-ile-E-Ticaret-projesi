@@ -2,7 +2,6 @@
 const mongoose = require('mongoose');
 const express = require("express");
 const app = express();
-
 const { v4: uuidv4 } = require("uuid");
 const multer = require("multer");
 const cors = require("cors");
@@ -75,8 +74,8 @@ const Order = mongoose.model("Order", orderSchema)
 //MESAJLAŞMA İÇİN 
 const messageSchema = new mongoose.Schema({
     _id: String,
+    receivedId: String,
     senderId: String,
-    sentId: String,
     message: String,
     date: Date,
     seen:String,
@@ -422,9 +421,9 @@ app.get("/messages", async (req, res) => {
             {
                 $lookup: {
                     from: "users", // ilişkili tablo
-                    localField: "senderId", // messages'de karşılığı
+                    localField: "receivedId", // messages'de karşılığı
                     foreignField: "_id", // users'da karşılığı
-                    as: "senderInfo" // saklanacak alan bunun üzerinden çağırıcaz
+                    as: "receivedInfo" // saklanacak alan bunun üzerinden çağırıcaz
                 }
             },
         ]);
@@ -454,8 +453,8 @@ io.on('connection', (socket) => {
             const message=new Messages({
             _id:uuidv4(),
             message:messageData.message,
-            sentId:messageData.sentId,
             senderId:messageData.senderId,
+            receivedId:messageData.receivedId,
             seen:messageData.seen
           });
           await message.save();
