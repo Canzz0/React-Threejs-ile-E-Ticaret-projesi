@@ -18,7 +18,7 @@ function AdminChat() {
   //GETİRME
   const getAll = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/messages", {
+      const response = await axios.get("http://localhost:5000/getmessage", {
         headers: {
           'Authorization': `Bearer ${token}`
         }

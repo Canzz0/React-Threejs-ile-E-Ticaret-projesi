@@ -4,14 +4,14 @@ const initialState = {
     category: []
 }
 export const getCategory = createAsyncThunk('getCategory', async () => {  //çağırma metodu normal reduxtan farklı
-    const { data } = await axios.get('http://localhost:5000/categories')    //Adres
+    const { data } = await axios.get('http://localhost:5000/getcategory')    //Adres
     return data;
 })
 
 //// EKLEME İŞLEMİ //// 
 export const addCategory = createAsyncThunk('addCategory', async (formData) => {
     try {
-        const { data } = await axios.post('http://localhost:5000/categories/add', formData);
+        const { data } = await axios.post('http://localhost:5000/addcategory', formData);
         //MESAJI ALMA
         const successMessage = data.message;
         alert(successMessage);
@@ -25,7 +25,7 @@ export const addCategory = createAsyncThunk('addCategory', async (formData) => {
 //// SİLME İŞLEMİ ////
 export const removeCategory = createAsyncThunk('removeCategory', async (model) => {
     try {
-    const { deletedata } =await axios.post('http://localhost:5000/categories/remove', { _id: model.id });
+    const { deletedata } =await axios.post('http://localhost:5000/removecategory', { _id: model.id });
     const successMessage = deletedata.message;
         alert(successMessage);
         return successMessage;

@@ -12,7 +12,7 @@ function LoginComponent() {
         if (password === repassword & email !== '') {
             try {
                 let model = { email: email, password: password };   //Kullanıcının girdiği değerleri modele kaydediyoruz
-                let response = await axios.post("http://localhost:5000/auth/login", model);  //Axios ile post işlemini yapıyoruz
+                let response = await axios.post("http://localhost:5000/login", model);  //Axios ile post işlemini yapıyoruz
                 sessionStorage.setItem("token", response.data.token);     //sessionStorage 'de girilen değerleri tutuyoruz
                 sessionStorage.setItem("userName", JSON.stringify(response.data.user.name));
                 sessionStorage.setItem("admin", JSON.stringify(response.data.user.isAdmin));

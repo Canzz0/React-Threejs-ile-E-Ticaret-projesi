@@ -12,10 +12,8 @@ function ProductComponent() {
     //GETİRME
     const getAll = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/products", {
-                headers: {
-                    'Authorization': `Bearer ${token}` // Tokenı ekleyin
-                }
+            const response = await axios.get("http://localhost:5000/getproduct", {
+                
             });
             setProducts(response.data);
         } catch (error) {

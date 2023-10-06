@@ -12,7 +12,7 @@ function ShopComponent() {
     })
     //GETİRME
     const getAll = async () => {
-        const response = await axios.get("http://localhost:5000/products");
+        const response = await axios.get("http://localhost:5000/getproduct");
 
         setProducts(response.data);
     }
@@ -22,9 +22,9 @@ function ShopComponent() {
         <>
 
             <div className=" w-100 row mt-5 ">
-                <div className="col-3">
+                 <div className="col-3">
                     <CategoryComponent />
-                </div>
+                </div> 
                 <div className="col-9">
                 <h1 className=''><strong>Alışveriş</strong></h1><hr/>
                     <div className={`custom-cards ${isVisible ? 'active' : ''}`}>

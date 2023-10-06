@@ -22,14 +22,14 @@ function ProductDetailComponent() {
   const addBasket = async (productId, sellerid) => {
     let userid = JSON.parse(sessionStorage.getItem("id"));
     let model = { productId: productId, sellerId: sellerid, userId: userid };
-    var response = await axios.post("http://localhost:5000/baskets/add", model);
+    var response = await axios.post("http://localhost:5000/addbasket", model);
     alert(response.data.message);
   }
 
 
   useEffect(() => {
     const getProductDetail = async () => {
-      const response = await axios.get("http://localhost:5000/products");
+      const response = await axios.get("http://localhost:5000/getproduct");
       var i = 0;
       for (i = 0; i < response.data.length; i++) {
         if (response.data[i]._id === productId) {

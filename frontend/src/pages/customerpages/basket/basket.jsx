@@ -7,7 +7,7 @@ function BasketComponent() {
     const getAll = async () => {
         let userid = JSON.parse(sessionStorage.getItem("id"));
         let model = { userId: userid };//bunu backend'e göndermek için yaptık
-        let response = await axios.post("http://localhost:5000/baskets/getAll", model);//Backend'e userId gönderdik değerleri alabilmek için
+        let response = await axios.post("http://localhost:5000/getbasket", model);//Backend'e userId gönderdik değerleri alabilmek için
         setBaskets(response.data);
 
         //TOPLAMLARI GÖSTERME
@@ -24,7 +24,7 @@ function BasketComponent() {
         let confirm = window.confirm("Ürünü Silmek İstediğinize Emin misiniz?");
         if (confirm) {
             let model = { _id: _id };
-            await axios.post("http://localhost:5000/baskets/remove", model);
+            await axios.post("http://localhost:5000/removebasket", model);
             getAll();
             window.location.reload()
         }
@@ -34,8 +34,8 @@ function BasketComponent() {
     const addOrder = async () => {
         let userid = JSON.parse(sessionStorage.getItem("id"));
         let model = { userId: userid };
-        await axios.post("http://localhost:5000/orders/add", model);
-        alert('Siparişiniz Oluşturuldu');
+        await axios.post("http://localhost:5000/addorder", model);
+        window.alert('Siparişiniz Oluşturuldu');
         window.location.reload('/')
 
     }
