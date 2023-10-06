@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Navigate, Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
+import Swal from 'sweetalert2'; // SweetAlert2'yi içe aktarın
+
 import { addCategory, removeCategory } from "../../../redux/features/category/category";
 
 function AddCategoryComponent() {
@@ -43,13 +45,17 @@ function AddCategoryComponent() {
         if (addCategory.fulfilled.match(action)) {
         }
         setName('');
-        window.location.reload()
+        window.location.reload('/')
     }
     //Yetki Kontrolü
     const checkIsAdmin = () => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         if (!admin) {  //Admin değeri false ise engelle
-            alert("Bu Sayfaya Erişiminiz Bulunmamaktadır")
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata!',
+                text: 'Bu Sayfaya Erişiminiz Bulunmamakta!!',
+              });
             navigate("/");
         }
     }

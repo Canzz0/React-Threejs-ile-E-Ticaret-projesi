@@ -4,6 +4,8 @@ import * as THREE from 'three';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify'; // react-toastify'yi içe aktarın
+import 'react-toastify/dist/ReactToastify.css';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 function ProductDetailComponent() {
@@ -22,8 +24,17 @@ function ProductDetailComponent() {
   const addBasket = async (productId, sellerid) => {
     let userid = JSON.parse(sessionStorage.getItem("id"));
     let model = { productId: productId, sellerId: sellerid, userId: userid };
-    var response = await axios.post("http://localhost:5000/addbasket", model);
-    alert(response.data.message);
+    try {
+      var response = await axios.post("http://localhost:5000/addbasket", model);
+      toast.success(response.data.message, {
+        autoClose: 3000, 
+      });
+    } catch (error) {
+      toast.error('Bir hata oluştu.', {
+        autoClose: 3000, 
+      });
+      console.error(error);
+    }
   }
 
 
@@ -98,7 +109,9 @@ function ProductDetailComponent() {
       {isLoading ? (
         <div>Yükleniyor...</div>
       ) : (
+        
         <div className="w-100 row m-4">
+                <ToastContainer position="top-center"  hideProgressBar />
           <div className={`product ${isVisible ? 'active' : ''}`}>
             <div className="product-image">
               <img style={{ width: "456px" }} src={'http://localhost:5000/' + product.imageUrl} />

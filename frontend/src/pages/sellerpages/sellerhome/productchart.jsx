@@ -14,7 +14,7 @@ const ProductChartComponent = () => {
 
   const getAll = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/orders", {
+      const response = await axios.post("http://localhost:5000/getorder", {
         headers: {
           'Authorization': `Bearer ${token}`
         }

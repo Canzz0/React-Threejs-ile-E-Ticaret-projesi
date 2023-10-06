@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import './basket.css';
+import { ToastContainer, toast } from 'react-toastify'; // react-toastify'yi içe aktarın
+import Swal from 'sweetalert2'; // SweetAlert2'yi içe aktarın
+
 function BasketComponent() {
     const [baskets, setBaskets] = useState([]);  //Basket değerleri alma güncelleme için
     const [total, setTotal] = useState(0);
     const getAll = async () => {
         let userid = JSON.parse(sessionStorage.getItem("id"));
         let model = { userId: userid };//bunu backend'e göndermek için yaptık
-        let response = await axios.post("http://localhost:5000/getbasket", model);//Backend'e userId gönderdik değerleri alabilmek için
+        var response = await axios.post("http://localhost:5000/getbasket", model);//Backend'e userId gönderdik değerleri alabilmek için
         setBaskets(response.data);
 
         //TOPLAMLARI GÖSTERME
@@ -19,24 +22,42 @@ function BasketComponent() {
 
     }
 
-    //Remove işlemi
     const remove = async (_id) => {
-        let confirm = window.confirm("Ürünü Silmek İstediğinize Emin misiniz?");
-        if (confirm) {
-            let model = { _id: _id };
-            await axios.post("http://localhost:5000/removebasket", model);
-            getAll();
-            window.location.reload()
+        const result = await Swal.fire({
+          title: 'Ürünü Silme',
+          text: 'Ürünü silmek istediğinize emin misiniz?',
+          icon: 'warning', 
+          showCancelButton: true, 
+          confirmButtonText: 'Evet', 
+          cancelButtonText: 'Hayır', 
+        });
+      
+        if (result.isConfirmed) {
+          
+          let model = { _id: _id };
+          await axios.post("http://localhost:5000/removebasket", model);
+          getAll();
+          window.location.reload();
         }
-    }
+      }
 
     //Sipariş Oluşturma
-    const addOrder = async () => {
+    const addOrder =  () => {
         let userid = JSON.parse(sessionStorage.getItem("id"));
         let model = { userId: userid };
-        await axios.post("http://localhost:5000/addorder", model);
-        window.alert('Siparişiniz Oluşturuldu');
-        window.location.reload('/')
+        try{
+             axios.post("http://localhost:5000/addorder", model);
+            toast.success('Siparişiniz Oluşturuldu', {
+                autoClose: 3000, 
+              });
+              window.location.reload('/')
+        }catch(error){
+            toast.error('Siparişiniz Oluşturulamadı', {
+                autoClose: 3000, 
+              });
+        }
+       
+        
 
     }
 
@@ -50,6 +71,7 @@ function BasketComponent() {
     <>
         <title>Sepetim</title>
         <div className="m-5 mt-2">
+        <ToastContainer position="top-center"  hideProgressBar />
             <div className="card basket-place">
                 <div className="card-header basket-header">
                     <h1>Sepetteki Ürünler</h1>

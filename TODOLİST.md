@@ -26,6 +26,6 @@
 
 
 /////            #BackEnd Özellikleri
-1.RestFul APİ Geçilecek
-2.Clean Code'a uygun hale getirilecek
++1.RestFul APİ Geçilecek
++2.Clean Code'a uygun hale getirilecek
 3.Tokenization getirilecek.

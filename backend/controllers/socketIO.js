@@ -46,7 +46,7 @@ function SocketServer(app) {
   });
 
   server.listen(3001, () => {
-    console.log('Sunucu 3001 portunda çalışıyor');
+    console.log('socketIO is running PORT:3001');
   });
 }
 

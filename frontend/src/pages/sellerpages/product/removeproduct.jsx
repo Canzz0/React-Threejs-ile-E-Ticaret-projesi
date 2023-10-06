@@ -1,22 +1,43 @@
 import React from 'react'
 import axios from "axios";
+import Swal from 'sweetalert2'; // SweetAlert2'yi içe aktarın
+import { toast } from 'react-toastify'; // react-toastify'yi içe aktarın
 const removeProduct = (_id) => {
   
   const remove = async (_id) => {
-    let confirm = window.confirm("Ürünü silmek istiyor musunuz?")
-    if (confirm) {
+    const result = await Swal.fire({
+      title: 'Ürünü Silme',
+      text: 'Ürünü silmek istiyor musunuz?',
+      icon: 'warning', 
+      showCancelButton: true, 
+      confirmButtonText: 'Evet', 
+      cancelButtonText: 'Hayır', 
+    });
+  
+    if (result.isConfirmed) {
       let model = { _id: _id };
-      let response = await axios.post("http://localhost:5000/removeproduct", model);
-      alert(response.data.message);
-      window.location.reload('/')
-
+      try {
+        let response = await axios.post("http://localhost:5000/removeproduct", model);
+        toast.success(response.data.message, {
+          autoClose: 3000,
+        });
+        window.location.reload('/');
+      } catch (error) {
+        toast.error('Bir hata oluştu.', {
+          autoClose: 3000,
+        });
+        console.error(error);
+      }
     }
   }
   
-  return (
-    <button onClick={() => remove(_id)} className='btn btn-outline-danger btn-sm'>
-      Sil
-    </button>
+  return (<>
+  
+<button onClick={() => remove(_id)} className='btn btn-outline-danger btn-sm'>
+  Sil
+</button>
+  </>
+  
   )
 }
 

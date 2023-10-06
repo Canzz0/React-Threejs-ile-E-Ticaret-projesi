@@ -34,13 +34,12 @@ const register = async (req, res) => {
                                           role: role,
                             }
                             const token = jwt.sign(payload, secretKey, { expiresIn: "1h" })
-                            res.json({ user: user, token: token })
+                           
                             res.status(200).json({
                                           status: 'Ok',
                                           user,
                                           token
-                            })
-
+                                        });
               } catch (error) {
                             res.status(500).json({ error: error.message })
               }
@@ -62,7 +61,7 @@ const login = async (req, res) => {
                                                                       user: user
                                                         };
                                                         const token = jwt.sign(payload, secretKey, { expiresIn: "1h" })
-                                                        res.json({ user: user, token: token })
+                                                        
                                                         res.status(200).json({
                                                                       status: 'Ok',
                                                                       user:user,

@@ -2,6 +2,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCategory } from "../../../redux/features/category/category";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify'; // react-toastify'yi içe aktarın
+
 function AddProduct() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -24,20 +26,32 @@ function AddProduct() {
         const imageInput = document.querySelector("input[name='image']");
         const figurInput = document.querySelector("input[name='figur']");
         const formData = new FormData();
-        formData.append("name", name);
-        formData.append("description", description);
-        formData.append("categoryName", categoryName);
-        formData.append("stock", stock);
-        formData.append("price", price);
-        formData.append("sellerid", sessionStorage.getItem("id"));
-        formData.append("image", imageInput.files[0], imageInput.files[0].name);
-        formData.append("figur", figurInput.files[0], figurInput.files[0].name);
-        var response = await axios.post("http://localhost:5000/addproduct", formData);
-        alert(response.data.message);
-        window.location.reload('/')
+
+        try {
+            formData.append("name", name);
+            formData.append("description", description);
+            formData.append("categoryName", categoryName);
+            formData.append("stock", stock);
+            formData.append("price", price);
+            formData.append("sellerid", sessionStorage.getItem("id"));
+            formData.append("image", imageInput.files[0], imageInput.files[0].name);
+            formData.append("figur", figurInput.files[0], figurInput.files[0].name);
+            var response = await axios.post("http://localhost:5000/addproduct", formData);
+            toast.success(response.data.message, {
+                autoClose: 3000,
+            });
+            window.location.reload('/')
+        } catch (error) {
+            toast.error('Bir hata oluştu.', {
+                autoClose: 3000,
+            });
+            window.location.reload('/')
+        }
     }
     return (
         <>
+            <ToastContainer position="top-center" hideProgressBar />
+
             <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content">
                     <div className="modal-header">

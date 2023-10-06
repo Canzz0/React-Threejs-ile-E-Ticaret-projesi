@@ -5,7 +5,6 @@ const path = require("path");
 const user = require('./routes/user.js');
 const product = require("./routes/product.js");
 const category = require("./routes/category.js");
-const storage = require("./middleware/multer.js");
 const basket = require("./routes/basket.js");
 const order = require("./routes/order.js");
 const message = require("./routes/message.js");
@@ -25,14 +24,13 @@ app.use('/',order);
 app.use('/',message);
 
 
-
+db()
 
 
 const Port = process.env.PORT || 5000;
 
 const server=app.listen(Port,()=>{
-              console.log("server is running")
+              console.log("server is running PORT:5000")
 })
 const io = SocketServer(server);
 
-db()

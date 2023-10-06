@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from 'axios';
+import Swal from 'sweetalert2'; // SweetAlert2'yi içe aktarın
+
 import './register.css'
 function RegisterComponent() {
     const navigate = useNavigate();
@@ -19,13 +21,26 @@ function RegisterComponent() {
                 sessionStorage.setItem("user", JSON.stringify(response.data.user)); //Önce jsona çevirip sonra yönlendiriyor
                 sessionStorage.setItem("id", JSON.stringify(response.data.user._id));
                 sessionStorage.setItem("admin", JSON.stringify(response.data.user.isAdmin));
-                navigate("/"); //BU da bizi direkt anasayfaya yönlendirmek için
-            }
-            catch (error) {
-                console.error(error)
-            }
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı!',
+                    text: 'Kayıt İşlemi Başarılı!!',
+                  });
+                navigate('/');
+              } catch (error) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Hata!',
+                  text: 'Bilgilerinizi kontrol ediniz!!',
+                });
+                console.error(error);
+              }
         } else {
-            window.alert('Kullanıcı Adı veya Şifre Yanlış')
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata!',
+                text: 'Bilgilerinizi kontrol ediniz!!',
+              });
         }
     }
 
