@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Navigate, Link, useNavigate } from 'react-router-dom';
+import { ToastContainer} from 'react-toastify'; // react-toastify'yi içe aktarın
+
 import AddProduct from "./addproduct";
 import RemoveProduct from "./removeproduct";
 import './product.css'
@@ -31,6 +33,7 @@ function ProductComponent() {
     return (
 
         <>
+                    <ToastContainer position="top-right" hideProgressBar />
             <div className="p-5 mt-2">
                 <div className="card">
                     <div className="card-header">

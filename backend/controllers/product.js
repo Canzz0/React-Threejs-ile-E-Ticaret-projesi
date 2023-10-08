@@ -58,7 +58,6 @@ const addProduct = async (req, res) => {
 };
 
 
-
 ////////////////////////////////////7
 
 //Product Sİlme İşlemi 
@@ -72,4 +71,32 @@ const removeProduct = async (req, res) => {
   }
 };
 
-module.exports = { getProduct, addProduct, removeProduct };
+////////////////////////////////////7
+
+//Product Arama (SearchProduct) İşlemi
+
+const searchProduct = async (req, res) => {
+  try {
+    const searchTerm = req.query.search;
+
+    // Boş bir arama terimi gönderildiğinde tüm ürünleri getirin
+    if (!searchTerm) {
+      const products = await ProductModel.find({}).sort({ name: 1 });
+      res.json(products);
+      return;
+    }
+
+    const products = await ProductModel.find({
+      $or: [
+        { name: { $regex: searchTerm, $options: 'i' } },
+        { description: { $regex: searchTerm, $options: 'i' } },
+      ],
+    }).sort({ name: 1 });
+
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { getProduct, addProduct, removeProduct,searchProduct };

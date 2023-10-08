@@ -19,7 +19,6 @@ function HomeComponent() {
                     <p data-shadow="WELCOME"><span>H</span><span>O</span>Ş<span>G</span>E<span>L</span>D<span>İ</span>N<span>İ</span>Z<span></span></p>
                 </div>
             </div>
-          
                 <Link style={{ textDecoration: 'none', color: 'black' }} to="/shop" className="link">
                     <div className="container">
                         <div className="content">

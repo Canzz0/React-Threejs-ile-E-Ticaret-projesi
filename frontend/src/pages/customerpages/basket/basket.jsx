@@ -48,12 +48,12 @@ function BasketComponent() {
         try{
              axios.post("http://localhost:5000/addorder", model);
             toast.success('Siparişiniz Oluşturuldu', {
-                autoClose: 3000, 
+                autoClose: 1300, 
               });
               window.location.reload('/')
         }catch(error){
             toast.error('Siparişiniz Oluşturulamadı', {
-                autoClose: 3000, 
+                autoClose: 1300, 
               });
         }
        
@@ -71,7 +71,7 @@ function BasketComponent() {
     <>
         <title>Sepetim</title>
         <div className="m-5 mt-2">
-        <ToastContainer position="top-center"  hideProgressBar />
+        <ToastContainer position="top-right" hideProgressBar />
             <div className="card basket-place">
                 <div className="card-header basket-header">
                     <h1>Sepetteki Ürünler</h1>

@@ -38,19 +38,19 @@ function AddProduct() {
             formData.append("figur", figurInput.files[0], figurInput.files[0].name);
             var response = await axios.post("http://localhost:5000/addproduct", formData);
             toast.success(response.data.message, {
-                autoClose: 3000,
+                autoClose: 1300,
             });
             window.location.reload('/')
         } catch (error) {
             toast.error('Bir hata oluştu.', {
-                autoClose: 3000,
+                autoClose: 1300,
             });
             window.location.reload('/')
         }
     }
     return (
         <>
-            <ToastContainer position="top-center" hideProgressBar />
+            <ToastContainer position="top-right" hideProgressBar />
 
             <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content">

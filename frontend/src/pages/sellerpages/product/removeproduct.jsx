@@ -19,12 +19,12 @@ const removeProduct = (_id) => {
       try {
         let response = await axios.post("http://localhost:5000/removeproduct", model);
         toast.success(response.data.message, {
-          autoClose: 3000,
+          autoClose: 1300,
         });
         window.location.reload('/');
       } catch (error) {
         toast.error('Bir hata oluştu.', {
-          autoClose: 3000,
+          autoClose: 1300,
         });
         console.error(error);
       }

@@ -58,7 +58,6 @@
 .content {
   height: 100%;
   width: 100%;
-  overflow: hidden;
   margin-bottom: 7px;
   transition: all 0.5s;
   color: rgb(8, 8, 8);

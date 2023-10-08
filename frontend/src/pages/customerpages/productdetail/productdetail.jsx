@@ -27,11 +27,11 @@ function ProductDetailComponent() {
     try {
       var response = await axios.post("http://localhost:5000/addbasket", model);
       toast.success(response.data.message, {
-        autoClose: 3000, 
+        autoClose: 1300, 
       });
     } catch (error) {
       toast.error('Bir hata oluştu.', {
-        autoClose: 3000, 
+        autoClose: 1300, 
       });
       console.error(error);
     }
@@ -111,7 +111,7 @@ function ProductDetailComponent() {
       ) : (
         
         <div className="w-100 row m-4">
-                <ToastContainer position="top-center"  hideProgressBar />
+                    <ToastContainer position="top-right" hideProgressBar />
           <div className={`product ${isVisible ? 'active' : ''}`}>
             <div className="product-image">
               <img style={{ width: "456px" }} src={'http://localhost:5000/' + product.imageUrl} />
