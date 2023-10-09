@@ -44,12 +44,13 @@ function ProductSearch() {
   }, []);
 
   return (
-    <div className='searchbar d-flex' onClick={handleToggleDropdown}>
+   
+<div className='searchbar d-flex' onClick={handleToggleDropdown}>
       <div ref={searchInputRef}>
         <input
           className='searchbar-input'
           type="text"
-          placeholder="Ürün adı veya açıklama girin..."
+          placeholder="Ürün adı veya açıklama giriniz..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -57,8 +58,9 @@ function ProductSearch() {
       <div className="dropdown  " ref={dropdownRef}>
         <ul className={`searchbar-info  dropdown-menu ${dropdown ? 'activeD' : 'Dactive'}`}>
           {products.map((product) => (
-            <Link to={`/products/${product._id}`} key={product._id}>
+            <Link style={{textDecoration:'none'}} to={`/products/${product._id}`} key={product._id}>
               <li className='dropdown-item'>
+              <img style={{ width: "45px" }} src={'http://localhost:5000/' + product.imageUrl} />
                 <h2>{product.name}</h2>
                 <p>{product.description}</p>
               </li>
@@ -67,6 +69,8 @@ function ProductSearch() {
         </ul>
       </div>
     </div>
+
+    
   );
 }
 

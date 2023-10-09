@@ -90,7 +90,6 @@ function ProductDetailComponent() {
       const controls = new OrbitControls(camera, renderer.domElement); //mouse ile kamera kontrolü yapabilmemizi sağlar
       controls.enableDamping = true; //Yumuşak kamera hareketi için
 
-      controls.autoRotate = true; //kameranın sürekli dönmesini sağlar 
       controls.autoRotateSpeed = 4;//Dönme hızını belirler
       controls.update(); //Render gibi sürekli güncelleme
       controlsRef.current = controls;

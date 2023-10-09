@@ -1,5 +1,5 @@
 /////       #React(Front-End)Özellikleri
-1.SweetAlert Eklenecek
++1.SweetAlert+Toastmessages Eklenecek
 +2.LOGİN'de giriş yaparken user bilgilerinde SADECE lazım olanlar alınacak(id,name,gibi)
 +3.Login sayfası yeniden yapılacak
 +4.Parallax kaldırılacak

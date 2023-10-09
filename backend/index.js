@@ -8,7 +8,8 @@ const category = require("./routes/category.js");
 const basket = require("./routes/basket.js");
 const order = require("./routes/order.js");
 const message = require("./routes/message.js");
-const {SocketServer} = require('./controllers/socketIO.js')
+const {SocketServer} = require('./controllers/socketIO.js');
+const usertoken = require("./routes/usertoken.js");
 const app = express();
 //Fonksiyonları kullanmaya başladık
 app.use(cors());   //Güvenlik protokolü
@@ -22,6 +23,7 @@ app.use('/',category)
 app.use('/',basket);
 app.use('/',order);
 app.use('/',message);
+app.use('/',usertoken)
 
 
 db()
