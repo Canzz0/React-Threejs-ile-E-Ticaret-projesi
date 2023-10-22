@@ -15,8 +15,6 @@ function HomeComponent() {
         dispatch(getUser(token))
         setUserData(user.data)
     }, [getUser]);
-
-    console.log(userData._id)
     return (
         <>
             <div className="welcome-page">
