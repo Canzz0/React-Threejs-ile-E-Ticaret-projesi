@@ -13,11 +13,22 @@ const getProduct = async (req,res) => {
   }
 };
 
+const getProductDetail = async (req,res) => {
+  try {
+    const { _id } = req.body;
+    const productdetail = await ProductModel.findById(_id);
+    res.json(productdetail);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads"); 
+    cb(null, "uploads");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);
@@ -60,7 +71,7 @@ const addProduct = async (req, res) => {
 
 ////////////////////////////////////7
 
-//Product Sİlme İşlemi 
+//Product Sİlme İşlemi
 const removeProduct = async (req, res) => {
   try {
     const { _id } = req.body;
@@ -99,4 +110,4 @@ const searchProduct = async (req, res) => {
   }
 };
 
-module.exports = { getProduct, addProduct, removeProduct,searchProduct };
+module.exports = { getProduct,getProductDetail, addProduct, removeProduct,searchProduct };

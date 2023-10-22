@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { Navigate, Link, useNavigate } from 'react-router-dom';
-import { useSelector,useDispatch } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'; // SweetAlert2'yi içe aktarın
 
 import { addCategory, removeCategory } from "../../../redux/features/category/category";
@@ -31,7 +31,7 @@ function AddCategoryComponent() {
             const action = await dispatch(removeCategory(model));
             if (removeCategory.fulfilled.match(action)) {
                 // Ekleme işlemi başarılı olduğunda yapılacak işlemleri burada gerçekleştirin
-                
+
             }
             window.location.reload()
 
@@ -55,7 +55,7 @@ function AddCategoryComponent() {
                 icon: 'error',
                 title: 'Hata!',
                 text: 'Bu Sayfaya Erişiminiz Bulunmamakta!!',
-              });
+            });
             navigate("/");
         }
     }

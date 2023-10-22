@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 function OrderComponent() {
     const [orders, setOrders] = useState([]);  //Basket değerleri alma güncelleme için
     const token = sessionStorage.getItem('token');
@@ -18,7 +18,7 @@ function OrderComponent() {
             console.error('Hata:', error);
         }
     }
-    ///Ürünlerimizi apı den Çekme işlemini yaptık 
+    ///Ürünlerimizi apı den Çekme işlemini yaptık
     useEffect(() => {
         getAll();
     }, []);

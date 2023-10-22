@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './searchproduct.css';
 
@@ -29,6 +29,7 @@ function ProductSearch() {
     }
   }, [searchTerm]);
 
+  // Dropdown dışına tıklanınca kapatmayı sağlayan useEffect
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -44,8 +45,7 @@ function ProductSearch() {
   }, []);
 
   return (
-   
-<div className='searchbar d-flex' onClick={handleToggleDropdown}>
+    <div className='searchbar d-flex' onClick={handleToggleDropdown}>
       <div ref={searchInputRef}>
         <input
           className='searchbar-input'
@@ -55,12 +55,12 @@ function ProductSearch() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className="dropdown  " ref={dropdownRef}>
-        <ul className={`searchbar-info  dropdown-menu ${dropdown ? 'activeD' : 'Dactive'}`}>
+      <div className="dropdown" ref={dropdownRef}>
+        <ul className={`searchbar-info dropdown-menu ${dropdown ? 'activeD' : 'Dactive'}`}>
           {products.map((product) => (
-            <Link style={{textDecoration:'none'}} to={`/products/${product._id}`} key={product._id}>
+            <Link style={{ textDecoration: 'none' }} to={`/products/${product._id}`} key={product._id}>
               <li className='dropdown-item'>
-              <img style={{ width: "45px" }} src={'http://localhost:5000/' + product.imageUrl} />
+                <img style={{ width: "45px" }} src={'http://localhost:5000/' + product.imageUrl} alt={product.name} />
                 <h2>{product.name}</h2>
                 <p>{product.description}</p>
               </li>
@@ -69,8 +69,6 @@ function ProductSearch() {
         </ul>
       </div>
     </div>
-
-    
   );
 }
 

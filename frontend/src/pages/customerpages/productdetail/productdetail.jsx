@@ -1,11 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import * as THREE from 'three';
 import axios from "axios";
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useState, useRef, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify'; // react-toastify'yi içe aktarın
 import 'react-toastify/dist/ReactToastify.css';
+import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 function ProductDetailComponent() {
@@ -27,30 +25,31 @@ function ProductDetailComponent() {
     try {
       var response = await axios.post("http://localhost:5000/addbasket", model);
       toast.success(response.data.message, {
-        autoClose: 1300, 
+        autoClose: 1300,
       });
     } catch (error) {
       toast.error('Bir hata oluştu.', {
-        autoClose: 1300, 
+        autoClose: 1300,
       });
       console.error(error);
     }
   }
 
 
-  useEffect(() => {
-    const getProductDetail = async () => {
-      const response = await axios.get("http://localhost:5000/getproduct");
-      var i = 0;
-      for (i = 0; i < response.data.length; i++) {
-        if (response.data[i]._id === productId) {
-          setProduct(response.data[i]);
-          setIsLoading(false);
-          break;
-        }
+  const getProductDetail = async () => {
+    const response = await axios.get("http://localhost:5000/getproduct");
+    var i = 0;
+    for (i = 0; i < response.data.length; i++) {
+      if (response.data[i]._id === productId) {
+        setProduct(response.data[i]);
+        setIsLoading(false);
+        break;
       }
+    }
 
-    };
+  };
+
+  useEffect(() => {
 
     getProductDetail();
   }, [productId]);
@@ -108,9 +107,9 @@ function ProductDetailComponent() {
       {isLoading ? (
         <div>Yükleniyor...</div>
       ) : (
-        
+
         <div className="w-100 row m-4">
-                    <ToastContainer position="top-right" hideProgressBar />
+          <ToastContainer position="top-right" hideProgressBar />
           <div className={`product ${isVisible ? 'active' : ''}`}>
             <div className="product-image">
               <img style={{ width: "456px" }} src={'http://localhost:5000/' + product.imageUrl} />

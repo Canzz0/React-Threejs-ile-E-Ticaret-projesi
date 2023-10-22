@@ -1,27 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import {BrowserRouter, Route,Routes} from 'react-router-dom';
-import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LayoutComponent from './components/layout/layout';
-import HomeComponent from './pages/customerpages/home/home';
-import ProductComponent from './pages/sellerpages/product/product';
-import OrderComponent from './pages/customerpages/order/order';
+import './index.css';
+import AddCategoryComponent from './pages/adminpages/addcategorypage/addcategory';
+import AdminChat from './pages/adminpages/adminchat/adminchat';
 import BasketComponent from './pages/customerpages/basket/basket';
-import LoginComponent from './pages/login/login';
-import RegisterComponent from './pages/register/register';
+import HomeComponent from './pages/customerpages/home/home';
+import OrderComponent from './pages/customerpages/order/order';
 import ProductDetailComponent from './pages/customerpages/productdetail/productdetail';
 import ShopComponent from './pages/customerpages/shop/shop';
-import AddCategoryComponent from './pages/adminpages/addcategorypage/addcategory';
-import { Provider } from 'react-redux';
-import { store } from './redux/app/store';
+import LoginComponent from './pages/login/login';
+import RegisterComponent from './pages/register/register';
+import ProductComponent from './pages/sellerpages/product/product';
 import SellerHomeComponent from './pages/sellerpages/sellerhome/sellerhome';
-import AdminChat from './pages/adminpages/adminchat/adminchat';
+import { store } from './redux/app/store';
+import reportWebVitals from './reportWebVitals';
 
 
-const token = sessionStorage.getItem('token');
 
-console.log(token)
 
 function AppComponent (){
   return (
