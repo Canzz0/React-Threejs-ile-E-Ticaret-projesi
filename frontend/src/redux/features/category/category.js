@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from "axios"
+import axios from "axios";
 const initialState = {
     category: []
 }
@@ -25,8 +25,8 @@ export const addCategory = createAsyncThunk('addCategory', async (formData) => {
 //// SİLME İŞLEMİ ////
 export const removeCategory = createAsyncThunk('removeCategory', async (model) => {
     try {
-    const { deletedata } =await axios.post('http://localhost:5000/removecategory', { _id: model.id });
-    const successMessage = deletedata.message;
+    const { data } =await axios.post('http://localhost:5000/removecategory', { _id: model.id });
+    const successMessage = data.message;
         alert(successMessage);
         return successMessage;
     }catch (error) {

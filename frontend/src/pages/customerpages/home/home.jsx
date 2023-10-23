@@ -17,6 +17,7 @@ function HomeComponent() {
     }, [getUser]);
     return (
         <>
+        
             <div className="welcome-page">
                 <div className="corner"></div>
                 <div className="corner"></div>

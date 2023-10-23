@@ -1,56 +1,37 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2'; // SweetAlert2'yi içe aktarın
-
+import Swal from 'sweetalert2';
 import { addCategory, removeCategory } from "../../../redux/features/category/category";
+import { getUser } from "../../../redux/features/tokenmatch/tokenmatch";
 
 function AddCategoryComponent() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();  //Navigate hooks kullanmak için
+    const [userData, setUserData] = useState([]);
+    const token = sessionStorage.getItem('token');
+    const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
     const [name, setName] = useState("");
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.user);
 
-    //GETİRME
-    const getAll = async () => {
-        const response = await axios.get("http://localhost:5000/categories");
-        setCategories(response.data);
-    }
-    ///Ürünlerimizi apı den Çekme işlemini yaptık 
+
+    //Kullanıcı bilgilerini getirmek ve redux'ta saklamak için
     useEffect(() => {
-        getAll();
-        checkIsAdmin();
-    }, []);
+        dispatch(getUser(token));
+    }, [dispatch, token]);
 
 
-    const remove = async (_id) => {
-        let confirm = window.confirm("Kategori silmek istiyor musunuz?")
-        if (confirm) {
-            let model = { id: _id };
-            const action = await dispatch(removeCategory(model));
-            if (removeCategory.fulfilled.match(action)) {
-                // Ekleme işlemi başarılı olduğunda yapılacak işlemleri burada gerçekleştirin
-
-            }
-            window.location.reload()
-
+    //Bilgileri kayıt etmek için kullanılır
+    useEffect(() => {
+        if (user.data) {
+            setUserData(user.data);
+            checkIsAdmin(user.data.isAdmin);
         }
-    }
-    ///EKLEME
-    const add = async (e) => {
-        e.preventDefault();
-        let formData = { name: name };
-        const action = await dispatch(addCategory(formData));
-        if (addCategory.fulfilled.match(action)) {
-        }
-        setName('');
-        window.location.reload('/')
-    }
-    //Yetki Kontrolü
-    const checkIsAdmin = () => {
-        let admin = JSON.parse(sessionStorage.getItem("admin"));
-        if (!admin) {  //Admin değeri false ise engelle
+    }, [user]);
+
+    const checkIsAdmin = (isAdmin) => {
+        if (!isAdmin) {
             Swal.fire({
                 icon: 'error',
                 title: 'Hata!',
@@ -60,8 +41,37 @@ function AddCategoryComponent() {
         }
     }
 
-    return (
+    const getAll = async () => {
+        const response = await axios.get("http://localhost:5000/getCategory");
+        setCategories(response.data);
+    }
 
+    useEffect(() => {
+        getAll();
+    }, []);
+
+    const remove = async (_id) => {
+        let confirm = window.confirm("Kategori silmek istiyor musunuz?")
+        if (confirm) {
+            let model = { id: _id };
+            const action = await dispatch(removeCategory(model));
+            if (removeCategory.fulfilled.match(action)) {
+                window.location.reload()
+            }
+        }
+    }
+    //EKleme
+     const add = async (e) => {
+        e.preventDefault();
+        let formData = { name: name };
+        const action = await dispatch(addCategory(formData));
+        if (addCategory.fulfilled.match(action)) {
+        }
+        setName('');
+        window.location.reload('/')
+    }
+
+    return (
         <>
             <title>Kategoriler</title>
             <div className="p-5 mt-2">
@@ -71,11 +81,10 @@ function AddCategoryComponent() {
                     </div>
                     <div className="card-body">
                         <div className="form-group">
-                            <button className="btn btn-outline-primary" data-bs-toggle="modal"
-                                data-bs-target="#addModal">
+                            <button className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addModal">
                                 Ekle
                             </button>
-                            <table className=" mt-2 table table-bordered table-hover">
+                            <table className="mt-2 table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -109,7 +118,7 @@ function AddCategoryComponent() {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form onSubmit={add}>   {/* Burada da modal yani pop-up içinde ekleme işlemini yaptık form-group dosyalarımızı ekleyip değerlerimizi yerine yazdırıp ekleme işlemi */}
+                        <form onSubmit={add}>
                             <div className="modal-body">
                                 <div className="form-group">
                                     <label htmlFor="name">Kategori Adı</label>
@@ -121,7 +130,6 @@ function AddCategoryComponent() {
                                 <button type="submit" className="btn btn-primary">Kaydet</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>

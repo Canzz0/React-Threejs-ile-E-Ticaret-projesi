@@ -1,4 +1,5 @@
 const CategoryModel = require('../models/category');
+const { v4: uuidv4 } = require("uuid");
 
 
 
@@ -16,6 +17,7 @@ const addCategory = async (req, res) => {
     try {
         const { name } = req.body;
         const category = new CategoryModel({
+            _id: uuidv4(),
             name: name
         })
         await category.save();

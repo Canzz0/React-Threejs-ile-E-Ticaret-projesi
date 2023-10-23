@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import './adminchat.css';
 import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
-
+import { getUser } from "../../../redux/features/tokenmatch/tokenmatch";
+import './adminchat.css';
 const socket = io('http://localhost:3001');
 
 
 function AdminChat() {
+  const [userDataId, setUserDataId] = useState('');
   const [selectedContact, setSelectedContact] = useState();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -14,7 +16,8 @@ function AdminChat() {
   const [receivedId, setReceivedId] = useState([]);
   const [userInfo,setUserInfo] = useState([]);
   const token = sessionStorage.getItem('token');
-  
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.user);
   //GETİRME
   const getAll = async () => {
     try {
@@ -31,13 +34,24 @@ function AdminChat() {
   }
 
   const SelectContact = (id) => {
-    console.log("Seçilen ID:", id);
     setSelectedContact(id);
   };
 
+  //Kullanıcı bilgilerini getirmek ve redux'ta saklamak için
+  useEffect(() => {
+    dispatch(getUser(token));
+}, [dispatch, token]);
 
 
+//Bilgileri kayıt etmek için kullanılır
+useEffect(() => {
+    if (user.data) {
+        setUserDataId(user.data._id);
 
+    }
+}, [user]);
+
+  console.log(userDataId)
   const handleSendMessage = async () => {
     const messageContent = {
       receivedId: selectedContact,
@@ -87,7 +101,7 @@ function AdminChat() {
     <div className="App">
       <div className="contact-list">
         {groupedContacts.map((contact) => (
-          (contact.senderId !== 'admin' && contact.senderId !== sessionStorage.getItem('id')) ? (
+          (contact.senderId !== 'admin' && contact.senderId !== '"'+userDataId+'"') ? (
             <div
               className={`contact ${selectedContact === contact.senderId ? 'selected' : ''}`}
               key={contact.senderId}
