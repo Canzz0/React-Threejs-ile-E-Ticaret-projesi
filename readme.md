@@ -19,7 +19,7 @@ Frontend tarafında ise framework olarak react kullandık.Ayrıca 3 boyutlu tasa
 
 ## Site Görsellerimiz:
 
-![Ekran görüntüsü 2023-07-25 154912](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/2f98aedd-3bc2-40c6-91de-e4c3db83d847)
+![Ekran görüntüsü 2023-07-25 154912]([https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/2f98aedd-3bc2-40c6-91de-e4c3db83d847](https://user-images.githubusercontent.com/78309558/278768595-2656e216-fea0-458b-8437-4b14d8e39cd0.png))
 ![Ekran görüntüsü 2023-07-25 154945](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/dd0fca57-44d9-4a78-9e09-b7b26edaa058)
 ![Ekran görüntüsü 2023-07-25 155048](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/d946315f-e25c-4e40-9e70-f8502e1da93d)
 ![Ekran görüntüsü 2023-07-25 155121](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/3cca498c-24ca-4763-a4e2-4a5d81d47cca)
