@@ -1,9 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from "../../../redux/features/tokenmatch/tokenmatch";
+
 function OrderComponent() {
     const [orders, setOrders] = useState([]);  //Basket değerleri alma güncelleme için
+    const [userData, setUserData] = useState([]);
     const token = sessionStorage.getItem('token');
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.user);
 
+        //Kullanıcı bilgilerini getirmek ve redux'ta saklamak için
+        useEffect(() => {
+            dispatch(getUser(token));
+        }, [dispatch, token]);
+    
+    
+        //Bilgileri kayıt etmek için kullanılır
+        useEffect(() => {
+            if (user.data) {
+                setUserData(user.data);
+    
+            }
+        }, [user]);
+        
     //GETİRME
     const getAll = async () => {
         try {
@@ -49,7 +69,7 @@ function OrderComponent() {
                                     <tbody>
                                         {orders.map((order, index) => (
                                             order.productInfo.map((product) => {
-                                                if ('"' + product.userId + '"' === sessionStorage.getItem('id')) {
+                                                if ('"' + product.userId + '"' === userData._id) {
                                                     return (
                                                         <tr key={product._id}>
                                                             <td>{index + 1}</td>

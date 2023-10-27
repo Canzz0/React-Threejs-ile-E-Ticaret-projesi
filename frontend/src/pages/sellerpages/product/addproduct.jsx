@@ -1,8 +1,9 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { getCategory } from "../../../redux/features/category/category";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify'; // react-toastify'yi içe aktarın
+import { getCategory } from "../../../redux/features/category/category";
+import { getUser } from "../../../redux/features/tokenmatch/tokenmatch";
 
 function AddProduct() {
     const [name, setName] = useState("");
@@ -12,9 +13,24 @@ function AddProduct() {
     const [stock, setStock] = useState(0);
     const [image, setImage] = useState("");
     const [figur, setFigur] = useState("");
-
-    //CATEGORY GETİRME (REDUX İLE)
+    const [userData, setUserData] = useState([]);
+    const token = sessionStorage.getItem('token');
     const dispatch = useDispatch();
+    const { user } = useSelector(state => state.user);
+    //Kullanıcı bilgilerini getirmek ve redux'ta saklamak için
+    useEffect(() => {
+        dispatch(getUser(token));
+    }, [dispatch, token]);
+
+
+    //Bilgileri kayıt etmek için kullanılır
+    useEffect(() => {
+        if (user.data) {
+            setUserData(user.data);
+
+        }
+    }, [user]);
+    //CATEGORY GETİRME (REDUX İLE)
     const { category } = useSelector(state => state.category)
     useEffect(() => {
         dispatch(getCategory())
@@ -33,7 +49,7 @@ function AddProduct() {
             formData.append("categoryName", categoryName);
             formData.append("stock", stock);
             formData.append("price", price);
-            formData.append("sellerid", sessionStorage.getItem("id"));
+            formData.append("sellerid", userData._id);
             formData.append("image", imageInput.files[0], imageInput.files[0].name);
             formData.append("figur", figurInput.files[0], figurInput.files[0].name);
             var response = await axios.post("http://localhost:5000/addproduct", formData);

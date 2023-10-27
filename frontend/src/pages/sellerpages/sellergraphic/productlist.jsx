@@ -1,11 +1,28 @@
-import React from 'react'
-import { useEffect, useState } from "react";
 import axios from "axios";
-
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from "../../../redux/features/tokenmatch/tokenmatch";
 const ProductListComponent = () => {
   const [orders, setOrders] = useState([]);
-  const sellerid= sessionStorage.getItem('id')
   const token = sessionStorage.getItem('token');
+  const [userData, setUserData] = useState([]);
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.user);
+
+
+  //Kullanıcı bilgilerini getirmek ve redux'ta saklamak için
+  useEffect(() => {
+      dispatch(getUser(token));
+  }, [dispatch, token]);
+
+
+  //Bilgileri kayıt etmek için kullanılır
+  useEffect(() => {
+      if (user.data) {
+          setUserData(user.data);
+        
+      }
+  }, [user]);
   //GETİRME
   const getAll = async () => {
     try {
@@ -42,7 +59,7 @@ const ProductListComponent = () => {
       <tbody>
         {orders.map((order, index) => (
           order.productInfo.map((product) => {
-            if ('"'+product.sellerid+'"' === sessionStorage.getItem('id')) {
+            if (product.sellerid  ===userData._id) {
               return (
                 <tr key={product._id}>
                   <td>{index + 1}</td>

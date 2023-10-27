@@ -1,9 +1,9 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
 import axios from 'axios';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'; // SweetAlert2'yi içe aktarın
 
-import './register.css'
+import './register.css';
 function RegisterComponent() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("")
@@ -17,10 +17,7 @@ function RegisterComponent() {
         if (password === repassword & name !== '' & email !== '') {
             try {
                 const response = await axios.post("http://localhost:5000/auth/register", model);  //AXİOS Üzerinden post işlemi yapıyoruz 
-                sessionStorage.setItem("token", response.data.token);  //Localstoreage içine depolamak için
-                sessionStorage.setItem("user", JSON.stringify(response.data.user)); //Önce jsona çevirip sonra yönlendiriyor
-                sessionStorage.setItem("id", JSON.stringify(response.data.user._id));
-                sessionStorage.setItem("admin", JSON.stringify(response.data.user.isAdmin));
+                Storage.setItem("token", response.data.token);  //Localstoreage içine depolamak için
                 Swal.fire({
                     icon: 'success',
                     title: 'Başarılı!',

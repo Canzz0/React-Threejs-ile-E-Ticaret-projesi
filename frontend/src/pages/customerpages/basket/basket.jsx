@@ -1,14 +1,35 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify'; // react-toastify'yi içe aktarın
 import Swal from 'sweetalert2'; // SweetAlert2'yi içe aktarın
+import { getUser } from "../../../redux/features/tokenmatch/tokenmatch";
 import './basket.css';
 
 function BasketComponent() {
     const [baskets, setBaskets] = useState([]);  //Basket değerleri alma güncelleme için
     const [total, setTotal] = useState(0);
+    const [userData, setUserData] = useState([]);
+    const token = sessionStorage.getItem('token');
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.user);
+
+
+    //Kullanıcı bilgilerini getirmek ve redux'ta saklamak için
+    useEffect(() => {
+        dispatch(getUser(token));
+    }, [dispatch, token]);
+
+
+    //Bilgileri kayıt etmek için kullanılır
+    useEffect(() => {
+        if (user.data) {
+            setUserData(user.data);
+
+        }
+    }, [user]);
     const getAll = async () => {
-        let userid = JSON.parse(sessionStorage.getItem("id"));
+        let userid = userData._id;
         let model = { userId: userid };//bunu backend'e göndermek için yaptık
         var response = await axios.post("http://localhost:5000/getbasket", model);//Backend'e userId gönderdik değerleri alabilmek için
         setBaskets(response.data);
@@ -43,7 +64,7 @@ function BasketComponent() {
 
     //Sipariş Oluşturma
     const addOrder = () => {
-        let userid = JSON.parse(sessionStorage.getItem("id"));
+        let userid = userData._id;
         let model = { userId: userid };
         try {
             axios.post("http://localhost:5000/addorder", model);

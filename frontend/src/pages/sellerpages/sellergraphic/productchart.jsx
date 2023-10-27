@@ -1,17 +1,37 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Chart from 'chart.js/auto';
 import { CategoryScale } from 'chart.js';
-import PieChart from './charts/pieChart';
+import Chart from 'chart.js/auto';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from "../../../redux/features/tokenmatch/tokenmatch";
+
 import LineChart from './charts/lineChart';
-import './sellerhome.css';
+import PieChart from './charts/pieChart';
+import './sellergraphic.css';
 
 Chart.register(CategoryScale);
 
 const ProductChartComponent = () => {
   const [orders, setOrders] = useState([]);
   const token = sessionStorage.getItem('token');
+  const [userData, setUserData] = useState([]);
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.user);
 
+
+  //Kullanıcı bilgilerini getirmek ve redux'ta saklamak için
+  useEffect(() => {
+      dispatch(getUser(token));
+  }, [dispatch, token]);
+
+
+  //Bilgileri kayıt etmek için kullanılır
+  useEffect(() => {
+      if (user.data) {
+          setUserData(user.data);
+        
+      }
+  }, [user]);
   const getAll = async () => {
     try {
       const response = await axios.post("http://localhost:5000/getorder", {
@@ -32,7 +52,7 @@ const ProductChartComponent = () => {
     const groupedProducts = {};
     productInfo.forEach((product) => {
       const { _id, name, sellerId } = product;
-      if ('"' + product.sellerid + '"' === sessionStorage.getItem('id')) {   //giriş yapan kullanıcıya ait bilgiler
+      if (product.sellerid  ===userData._id) {   //giriş yapan kullanıcıya ait bilgiler
         if (!groupedProducts[_id]) {   //Eğer buna ait id'li product değeri yoksa
           groupedProducts[_id] = {
             id: _id,

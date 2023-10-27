@@ -3,10 +3,10 @@ import ProductChartComponent from './productchart';
 import ProductListComponent from './productlist';
 
 
-function SellerHomeComponent() {
+function SellerGraphicComponent() {
     return (<>
         <ProductChartComponent />
         <ProductListComponent />
     </>)
 }
-export default SellerHomeComponent;
+export default SellerGraphicComponent;

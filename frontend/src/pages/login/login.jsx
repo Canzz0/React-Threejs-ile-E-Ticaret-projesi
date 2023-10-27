@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'; // SweetAlert2'yi içe aktarın
 import 'sweetalert2/dist/sweetalert2.min.css'; // SweetAlert2 stil dosyasını dahil edin
@@ -18,9 +18,6 @@ function LoginComponent() {
         let model = { email: email, password: password };
         let response = await axios.post('http://localhost:5000/login', model);
         sessionStorage.setItem('token', response.data.token);
-        sessionStorage.setItem('userName', JSON.stringify(response.data.user.name));
-        sessionStorage.setItem('admin', JSON.stringify(response.data.user.isAdmin));
-        sessionStorage.setItem('id', JSON.stringify(response.data.user._id));
         Swal.fire({
             icon: 'success',
             title: 'Başarılı!',

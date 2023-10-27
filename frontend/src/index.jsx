@@ -14,7 +14,7 @@ import ShopComponent from './pages/customerpages/shop/shop';
 import LoginComponent from './pages/login/login';
 import RegisterComponent from './pages/register/register';
 import ProductComponent from './pages/sellerpages/product/product';
-import SellerHomeComponent from './pages/sellerpages/sellerhome/sellerhome';
+import SellerGraphicComponent from './pages/sellerpages/sellergraphic/sellergraphic';
 import { store } from './redux/app/store';
 import reportWebVitals from './reportWebVitals';
 
@@ -30,7 +30,7 @@ function AppComponent (){
        <Route path='/' element={<LayoutComponent/>} >  //Burada navbar için aşağıdaki route elementlerini layout componentinde kullanılması için iç içe yazdık 
         <Route index element={<HomeComponent/>}></Route>
         <Route  path='products' element={<ProductComponent/>}></Route>
-        <Route path='sellerhome' element={<SellerHomeComponent/>}></Route>
+        <Route path='sellergraphic' element={<SellerGraphicComponent/>}></Route>
         <Route  path='home' element={<HomeComponent/>}></Route>
         <Route path='orders' element={<OrderComponent/>}></Route>
         <Route path='shop' element={<ShopComponent/>}></Route>
