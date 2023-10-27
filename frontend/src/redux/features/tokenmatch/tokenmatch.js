@@ -8,7 +8,6 @@ const initialState = {
 
 // Asenkron işlemi gerçekleştiren eylem oluşturucu
 export const getUser = createAsyncThunk('getUser', async (token) => {
-    console.log(token)
     const response = await axios.get('http://localhost:5000/secure-token', {
         headers: {
             'Authorization': `${token}`

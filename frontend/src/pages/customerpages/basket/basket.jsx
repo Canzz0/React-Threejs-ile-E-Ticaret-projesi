@@ -25,11 +25,13 @@ function BasketComponent() {
     useEffect(() => {
         if (user.data) {
             setUserData(user.data);
-
+            getAll(); //Veriler gelince userid değişkenini yenilemek için
         }
     }, [user]);
+    console.log(userData._id)
     const getAll = async () => {
         let userid = userData._id;
+        
         let model = { userId: userid };//bunu backend'e göndermek için yaptık
         var response = await axios.post("http://localhost:5000/getbasket", model);//Backend'e userId gönderdik değerleri alabilmek için
         setBaskets(response.data);

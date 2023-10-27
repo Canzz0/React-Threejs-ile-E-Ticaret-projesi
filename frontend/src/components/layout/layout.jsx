@@ -44,7 +44,6 @@ function LayoutComponent() {
 
         }
     }, [user]);
-    console.log(userData.role)
     return (
         <>
             <nav className="navbar navbar-expand-lg mt-2  ">

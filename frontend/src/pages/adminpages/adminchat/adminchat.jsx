@@ -51,7 +51,6 @@ useEffect(() => {
     }
 }, [user]);
 
-  console.log(userDataId)
   const handleSendMessage = async () => {
     const messageContent = {
       receivedId: selectedContact,

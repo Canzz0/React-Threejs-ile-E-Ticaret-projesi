@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; // react-toastify'yi içe aktarın
 import 'react-toastify/dist/ReactToastify.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+import { getUser } from "../../../redux/features/tokenmatch/tokenmatch";
 function ProductDetailComponent() {
   const { productId } = useParams(); // React Router'dan parametreleri alıyoruz
   const [product, setProduct] = useState([]);
@@ -14,13 +16,35 @@ function ProductDetailComponent() {
   const [isVisible, setIsVisible] = useState(false); //Sayfanın animasyonu için ben yavaş yüklenme animasyonu kullandım
   const [popup, setPopup] = useState(false)
   const [isLoading, setIsLoading] = useState(true); // Yükleme durumunu ekleme
+  //REDUX İŞLEMLERİ
+  
+  const [userData, setUserData] = useState([]);
+    const token = sessionStorage.getItem('token');
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.user);
+
+
+    //Kullanıcı bilgilerini getirmek ve redux'ta saklamak için
+    useEffect(() => {
+        dispatch(getUser(token));
+    }, [dispatch, token]);
+
+
+    //Bilgileri kayıt etmek için kullanılır
+    useEffect(() => {
+        if (user.data) {
+            setUserData(user.data);
+
+        }
+    }, [user]);
+    
   function togglePopup() {
     setPopup(prevPopup => !prevPopup);
   }
-
+  let userid = userData._id;
 
   const addBasket = async (productId, sellerid) => {
-    let userid = JSON.parse(sessionStorage.getItem("id"));
+    
     let model = { productId: productId, sellerId: sellerid, userId: userid };
     try {
       var response = await axios.post("http://localhost:5000/addbasket", model);
