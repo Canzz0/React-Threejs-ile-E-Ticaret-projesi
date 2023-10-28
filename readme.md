@@ -7,6 +7,7 @@
 **Veritabanı**:MongoDb
 
 Sitemizden kısaca bahsetmek gerekirse;
+
 Yönetici için:Kategori Ekleme,Canlı Destek Kontrol Sayfası,Ürün Ekleme
 
 Satıcı için:3 Boyutlu ürün ekleyebilme,canlı destek hattı,ürün toplam satış,ürün satış grafiği görebilme.
