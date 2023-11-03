@@ -7,8 +7,11 @@
 **Veritabanı**:MongoDb
 
 Sitemizden kısaca bahsetmek gerekirse;
+
 Yönetici için:Kategori Ekleme,Canlı Destek Kontrol Sayfası,Ürün Ekleme
+
 Satıcı için:3 Boyutlu ürün ekleyebilme,canlı destek hattı,ürün toplam satış,ürün satış grafiği görebilme.
+
 Müşteri için:Ürünü 3 boyutlu inceleyebilme,satın alabilme,canlı destek hattı.
 
 ## Backend
@@ -19,9 +22,10 @@ Frontend tarafında ise framework olarak react kullandık.Ayrıca 3 boyutlu tasa
 
 ## Site Görsellerimiz:
 
-![Ekran görüntüsü 2023-07-25 154912](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/2f98aedd-3bc2-40c6-91de-e4c3db83d847)
-![Ekran görüntüsü 2023-07-25 154945](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/dd0fca57-44d9-4a78-9e09-b7b26edaa058)
-![Ekran görüntüsü 2023-07-25 155048](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/d946315f-e25c-4e40-9e70-f8502e1da93d)
-![Ekran görüntüsü 2023-07-25 155121](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/3cca498c-24ca-4763-a4e2-4a5d81d47cca)
-![Ekran görüntüsü 2023-07-25 155135](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/87dc8852-a0a6-4bef-bc04-61fe7eec48d2)
-![Ekran görüntüsü 2023-07-25 155156](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/4b6cfbee-40dc-419b-92a7-ac4aabfaba9a)
+![Ekran görüntüsü 2023-10-28 004845](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/f0ca346b-d43f-4105-8b43-0a44c982c462)
+![Ekran görüntüsü 2023-10-28 005002](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/cde2d2df-3515-45d3-8dc5-9cef8fc9e0b1)
+![Ekran görüntüsü 2023-10-28 004905](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/2656e216-fea0-458b-8437-4b14d8e39cd0)
+![Ekran görüntüsü 2023-10-28 004917](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/017a5a74-d84f-45a8-a1ce-372dad1d41fa)
+![Ekran görüntüsü 2023-10-28 004927](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/b13cf08a-44e8-45cc-9d5e-c7c297c59d67)
+![Ekran görüntüsü 2023-10-28 004938](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/f3f7e6a3-d633-4b86-b0b6-4df57db849f4)
+![Ekran görüntüsü 2023-10-28 005147](https://github.com/Canzz0/React-Threejs-ile-E-Ticaret-projesi/assets/78309558/bd573bf5-31a8-421d-ad8d-20cf61747cda)
