@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const UserModel = require('../models/user'); 
+const UserModel = require('../models/user');
 const secretKey = 'Gizli Anahtar';
 
 
@@ -27,11 +27,11 @@ const secureToken = async (req, res, next) => {
       const { _id, name, isAdmin, role } = foundUser;
 
       req.user = { _id, name, isAdmin, role };
-      next(); 
+      next();
     });
   } catch (error) {
     res.status(500).json({ message: 'Sunucu hatası: Kullanıcı bilgileri alınamadı.' });
   }
 };
 
-module.exports = {secureToken}
+module.exports = { secureToken }
