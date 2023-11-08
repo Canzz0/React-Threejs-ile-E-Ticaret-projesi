@@ -20,7 +20,7 @@ function AddCategoryComponent() {
     useEffect(() => {
         dispatch(getUser(token));
     }, [dispatch, token]);
-
+    console.log(user.data.isAdmin)
 
     //Bilgileri kayıt etmek için kullanılır
     useEffect(() => {

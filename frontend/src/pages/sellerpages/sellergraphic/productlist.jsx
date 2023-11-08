@@ -23,6 +23,7 @@ const ProductListComponent = () => {
         
       }
   }, [user]);
+  console.log(userData)
   //GETİRME
   const getAll = async () => {
     try {

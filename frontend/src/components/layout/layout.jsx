@@ -55,6 +55,7 @@ function LayoutComponent() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarCollapse">
                         <div className="navbar-nav">
+                            <Link to="/home" className="nav-item nav-link navbar-dark">Anasayfa</Link>
                             {userData.role === 'satici' && (
                                 <>
                                     <Link to="/sellergraphic" className="nav-item nav-link navbar-dark">Grafikler</Link>
@@ -67,15 +68,19 @@ function LayoutComponent() {
                                     <Link to="/adminchat" className="nav-item nav-link navbar-dark">Canlı Destek</Link>
                                 </>
                             )}
-                            <Link to="/home" className="nav-item nav-link navbar-dark">Anasayfa</Link>
-                            <Link to="/shop" className="nav-item nav-link navbar-dark">Alışveriş</Link>
-                            <Link to="/basket" className="nav-item nav-link navbar-dark">Sepetim</Link>
+                            {userData.role === 'musteri' && (
+                                <>
+                                    <Link to="/shop" className="nav-item nav-link navbar-dark">Alışveriş</Link>
+                                    <Link to="/basket" className="nav-item nav-link navbar-dark">Sepetim</Link>
+                                </>
+                            )}
+
                         </div>
                         <div className="navbar-nav">
                             <ProductSearch />
                         </div>
                         <div className="navbar-nav ms-auto">
-                            <Link to="#" className="nav-item nav-link"><strong><i className="bi bi-person"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
+                            <Link to="/updatepages" className="nav-item nav-link"><strong><i className="bi bi-person"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                             </svg></i>
                             </strong></Link>

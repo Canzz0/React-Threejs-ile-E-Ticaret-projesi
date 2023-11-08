@@ -15,6 +15,7 @@ import LoginComponent from './pages/login/login';
 import RegisterComponent from './pages/register/register';
 import ProductComponent from './pages/sellerpages/product/product';
 import SellerGraphicComponent from './pages/sellerpages/sellergraphic/sellergraphic';
+import UpdateUser from './pages/updateuser/updateuser';
 import { store } from './redux/app/store';
 import reportWebVitals from './reportWebVitals';
 
@@ -35,10 +36,13 @@ function AppComponent (){
         <Route path='orders' element={<OrderComponent/>}></Route>
         <Route path='shop' element={<ShopComponent/>}></Route>
         <Route path='basket' element={<BasketComponent/>}></Route>
-        <Route exact path="/products/:productId" element={<ProductDetailComponent/>} />
+        <Route exact path="products/:productId" element={<ProductDetailComponent/>} />
         <Route path='addcategory' element={<AddCategoryComponent/>}></Route>
-        <Route  path='adminchat' element={<AdminChat/>}></Route>  
+        <Route  path='adminchat' element={<AdminChat/>}></Route>
+        <Route path='updatepages' element={<UpdateUser/>}></Route>       //LOGİN VEAYA REGİSTER sayfalarında navbar olmayacağı için içine yazmadık
+
       </Route>
+
       <Route path='login' element={<LoginComponent/>}></Route>       //LOGİN VEAYA REGİSTER sayfalarında navbar olmayacağı için içine yazmadık
       <Route path='register' element={<RegisterComponent/>}></Route>
       

@@ -1,7 +1,6 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CategoryComponent from '../../../components/category/category';
 function ShopComponent() {
     const [products, setProducts] = useState([]);
@@ -17,6 +16,7 @@ function ShopComponent() {
         setProducts(response.data);
     }
     
+    console.log(products)
 
     return (
         <>

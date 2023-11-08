@@ -21,16 +21,16 @@ const ProductChartComponent = () => {
 
   //Kullanıcı bilgilerini getirmek ve redux'ta saklamak için
   useEffect(() => {
-      dispatch(getUser(token));
+    dispatch(getUser(token));
   }, [dispatch, token]);
 
 
   //Bilgileri kayıt etmek için kullanılır
   useEffect(() => {
-      if (user.data) {
-          setUserData(user.data);
-        
-      }
+    if (user.data) {
+      setUserData(user.data);
+
+    }
   }, [user]);
   const getAll = async () => {
     try {
@@ -52,7 +52,7 @@ const ProductChartComponent = () => {
     const groupedProducts = {};
     productInfo.forEach((product) => {
       const { _id, name, sellerId } = product;
-      if (product.sellerid  ===userData._id) {   //giriş yapan kullanıcıya ait bilgiler
+      if (product.sellerid === userData._id) {   //giriş yapan kullanıcıya ait bilgiler
         if (!groupedProducts[_id]) {   //Eğer buna ait id'li product değeri yoksa
           groupedProducts[_id] = {
             id: _id,
@@ -62,7 +62,7 @@ const ProductChartComponent = () => {
           };
 
         } else {  //Eğer buna ait id'li product değeri varsa
-          groupedProducts[_id].total += 1;  
+          groupedProducts[_id].total += 1;
         }
       }
 

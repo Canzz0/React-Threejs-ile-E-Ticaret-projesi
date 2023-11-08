@@ -24,9 +24,9 @@ const secureToken = async (req, res, next) => {
         return res.status(404).json({ message: 'Kullanıcı bulunamadı.' });
       }
 
-      const { _id, name, isAdmin, role } = foundUser;
+      const { _id, name, isAdmin, role,email } = foundUser;
 
-      req.user = { _id, name, isAdmin, role };
+      req.user = { _id, name, isAdmin, role,email};
       next();
     });
   } catch (error) {

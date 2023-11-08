@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { Navigate, Link, useNavigate } from 'react-router-dom';
-import { ToastContainer} from 'react-toastify'; // react-toastify'yi içe aktarın
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify'; // react-toastify'yi içe aktarın
 
 import AddProduct from "./addproduct";
+import './product.css';
 import RemoveProduct from "./removeproduct";
-import './product.css'
 function ProductComponent() {
     const navigate = useNavigate();  //Navigate hooks kullanmak için
     const [products, setProducts] = useState([]);
@@ -29,7 +29,6 @@ function ProductComponent() {
 
         document.title = 'Ürünler';
     }, []);
-
     return (
 
         <>

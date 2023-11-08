@@ -1,0 +1,9 @@
+.update-place{
+    font-size: 25px;
+    margin-top: 45px;
+    width: 75%;
+}
+.update-place .card{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}

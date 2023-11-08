@@ -28,7 +28,7 @@ function HomeComponent() {
                 </div>
             </div>
             <Link style={{ textDecoration: 'none', color: 'black' }} to="/shop" className="link">
-                <div className="container">
+                <div className="home-info-container">
                     <div className="content">
                         <h1>Teknoloji</h1>
                         <br />
@@ -40,7 +40,7 @@ function HomeComponent() {
                 </div>
             </Link>
             <Link style={{ textDecoration: 'none', color: 'black' }} to="/shop" className="link">
-                <div className="container">
+                <div className="home-info-container">
                     <div className="content">
                         <h1>Giyim</h1>
                         <br />
@@ -51,7 +51,7 @@ function HomeComponent() {
                     <img src={require('./images/t-shirt.png')} className="image" alt="giyim" />                            </div>
             </Link>
             <Link style={{ textDecoration: 'none', color: 'black' }} to="/shop" className="link">
-                <div className="container ">
+                <div className="home-info-container ">
                     <div className="content">
                         <h1>Dekorasyon</h1>
                         <br />                                    <p>
